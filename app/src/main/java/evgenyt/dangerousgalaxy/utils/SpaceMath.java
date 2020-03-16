@@ -1,5 +1,7 @@
 package evgenyt.dangerousgalaxy.utils;
 
+import static java.lang.Math.sqrt;
+
 public class SpaceMath {
 
     public static class Point {
@@ -25,19 +27,23 @@ public class SpaceMath {
         }
 
         public long getScrX() {
-            return centerX + (long) (x * ratio);
+            return (long) ((x +centerX) * ratio + 500);
         }
 
         public long getSxrY() {
-            return centerY + (long) (y * ratio);
+            return (long) ((centerY + y) * ratio + 750);
         }
-
-
 
         @Override
         public String toString() {
             return  x + "-" +y;
         }
+    }
+
+    public static float distance(float x0, float x1, float y0, float y1) {
+        float x = x0 - x1;
+        float y = y0 - y1;
+        return (float)sqrt(x * x + y * y);
     }
 
     public static Point getRandomPoint(long r) {

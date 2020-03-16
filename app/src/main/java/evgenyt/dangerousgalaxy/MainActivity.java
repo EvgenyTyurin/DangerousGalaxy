@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     private double oldY;
     private double oldX;
     private boolean zooming;
+    private boolean pastZoom;
+    private float oldDistance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,32 +37,45 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
+        boolean oneUp = false;
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_POINTER_DOWN:
-                zooming = true;
+                zooming = event.getPointerCount() == 2;
+                oldDistance = SpaceMath.distance(event.getX(0), event.getX(1),
+                        event.getY(0), event.getY(1));
                 break;
             case MotionEvent.ACTION_POINTER_UP:
-                zooming = false;
+                zooming = event.getPointerCount() != 2;
+                oneUp = true;
                 break;
         }
-
         switch(event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                oldY = event.getY();
-                oldX = event.getX();
+                if (!zooming) {
+                    oldY = event.getY();
+                    oldX = event.getX();
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (zooming) {
-                    SpaceMath.Point.ratio += (oldY - event.getY()) / 10;
+                if (zooming && oldDistance > 0 && event.getPointerCount() == 2) {
+                    float distance = SpaceMath.distance(event.getX(0), event.getX(1),
+                            event.getY(0), event.getY(1));
+                    SpaceMath.Point.ratio *= distance / oldDistance;
+                    oldDistance = distance;
                     if (SpaceMath.Point.ratio < 1 ) {
                         SpaceMath.Point.ratio = 1;
                     }
+                    pastZoom = true;
                 } else {
-                    SpaceMath.Point.centerY -= oldY - event.getY();
-                    SpaceMath.Point.centerX -= oldX - event.getX();
+                    if (pastZoom || oneUp) {
+                        pastZoom = false;
+                    } else {
+                        SpaceMath.Point.centerY -= (oldY - event.getY()) / SpaceMath.Point.ratio;
+                        SpaceMath.Point.centerX -= (oldX - event.getX()) / SpaceMath.Point.ratio;
+                        oldY = event.getY();
+                        oldX = event.getX();
+                    }
                 }
-                oldY = event.getY();
-                oldX = event.getX();
                 break;
             case MotionEvent.ACTION_UP:
                 break;
