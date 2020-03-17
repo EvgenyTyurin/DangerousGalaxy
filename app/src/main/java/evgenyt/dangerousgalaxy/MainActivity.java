@@ -11,10 +11,7 @@ import evgenyt.dangerousgalaxy.utils.SpaceMath;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener {
 
-    GalaxyView galaxyView;
-
-    private static final double WINDOW_WIDTH = 1000;
-    private static final double WINDOW_HEIGHT = 1500;
+    private GalaxyView galaxyView;
 
     private double oldY;
     private double oldX;
@@ -25,10 +22,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        SpaceMath.Point.centerX = (long) (WINDOW_WIDTH / 2);
-        SpaceMath.Point.centerY = (long) (WINDOW_HEIGHT / 2);
-
         galaxyView = new GalaxyView(this);
         galaxyView.setBackgroundColor(Color.WHITE);
         galaxyView.setOnTouchListener(this);
@@ -60,18 +53,20 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
                 if (zooming && oldDistance > 0 && event.getPointerCount() == 2) {
                     float distance = SpaceMath.distance(event.getX(0), event.getX(1),
                             event.getY(0), event.getY(1));
-                    SpaceMath.Point.ratio *= distance / oldDistance;
+                    galaxyView.setRatio(galaxyView.getRatio() * distance / oldDistance);
                     oldDistance = distance;
-                    if (SpaceMath.Point.ratio < 1 ) {
-                        SpaceMath.Point.ratio = 1;
+                    if (galaxyView.getRatio() < 0.1 ) {
+                        galaxyView.setRatio(0.1f);
                     }
                     pastZoom = true;
                 } else {
                     if (pastZoom || oneUp) {
                         pastZoom = false;
                     } else {
-                        SpaceMath.Point.centerY -= (oldY - event.getY()) / SpaceMath.Point.ratio;
-                        SpaceMath.Point.centerX -= (oldX - event.getX()) / SpaceMath.Point.ratio;
+                        long deltaY = (long) ((oldY - event.getY()) / galaxyView.getRatio());
+                        long deltaX = (long) ((oldX - event.getX()) / galaxyView.getRatio());
+                        galaxyView.setCenterY(galaxyView.getCenterY() - deltaY);
+                        galaxyView.setCenterX(galaxyView.getCenterX() - deltaX);
                         oldY = event.getY();
                         oldX = event.getX();
                     }

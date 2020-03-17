@@ -4,18 +4,29 @@ import static java.lang.Math.sqrt;
 
 public class SpaceMath {
 
-    public static class Point {
+    // Random generator sequence vars
+    static double x = 0;
+    static boolean k = true;
+    static double i = 1;
 
-        public static long centerX;
-        public static long centerY;
-        public static float ratio = 1;
+    public static class Point {
 
         private long x;
         private long y;
+        private double angle;
+        private long radius;
 
-        public Point(long x, long y) {
-            this.x = x;
-            this.y = y;
+        public Point(double angle, long radius) {
+            this.angle = angle;
+            this.radius = radius;
+            x = (long) (radius * Math.cos(angle));
+            y = (long) (radius * Math.sin(angle));
+        }
+
+        public void rotate(double delta) {
+            angle += delta;
+            x = (long) (radius * Math.cos(angle));
+            y = (long) (radius * Math.sin(angle));
         }
 
         public long getX() {
@@ -26,17 +37,9 @@ public class SpaceMath {
             return y;
         }
 
-        public long getScrX() {
-            return (long) ((x +centerX) * ratio + 500);
-        }
-
-        public long getSxrY() {
-            return (long) ((centerY + y) * ratio + 750);
-        }
-
         @Override
         public String toString() {
-            return  x + "-" +y;
+            return  x + ":" +y;
         }
     }
 
@@ -47,14 +50,12 @@ public class SpaceMath {
     }
 
     public static Point getRandomPoint(long r) {
-        double angle = getRandomAngle(r);
-        // r = (long) Math.sqrt((double)r);
-        return new Point((long) (r * Math.cos(angle)),
-                (long) (r * Math.sin(angle)));
+        double angle = getRandomAngle();
+        return new Point(angle, r);
     }
 
-    public static double getRandomAngle(long r) {
-        double x = getRandom(r);
+    public static double getRandomAngle() {
+        double x = getNextRandom();
         String str = String.valueOf(x);
         str = reverseString(str);
         str = str.substring(0, str.indexOf('.'));
@@ -64,16 +65,13 @@ public class SpaceMath {
         return x * Math.PI * 2;
     }
 
-    public static double getRandom(long r) {
-        double x = 0;
-        boolean k = true;
-        for (int i = 1; i <= r; i++) {
-            if (k)
-                x += 1 / (double) i;
-            else
-                x -= 1 / (double) i;
-            k = !k;
-        }
+    public static double getNextRandom() {
+        if (k)
+            x += 1 / i;
+        else
+            x -= 1 / i;
+        k = !k;
+        i++;
         return x;
     }
 

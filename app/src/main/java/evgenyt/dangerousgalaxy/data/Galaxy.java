@@ -6,11 +6,12 @@ import java.util.List;
 import evgenyt.dangerousgalaxy.utils.SpaceMath;
 
 public class Galaxy {
+    public static final int STARS_NUM = 100000;
     private static Galaxy galaxy;
-    private List<Star> stars = new ArrayList<>();
+    private List<Star> stars = new ArrayList<>(STARS_NUM);
 
     private Galaxy(){
-        for (int i = 5; i <= 1000; i++) {
+        for (int i = 5; i <= STARS_NUM; i++) {
             stars.add(new Star(SpaceMath.getRandomPoint(i)));
         }
     }
