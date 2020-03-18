@@ -9,11 +9,13 @@ public class Galaxy {
     public static final int STARS_NUM = 100000;
     private static Galaxy galaxy;
     private List<Star> stars = new ArrayList<>(STARS_NUM);
+    private SpaceShip playerShip;
 
     private Galaxy(){
         for (int i = 5; i <= STARS_NUM; i++) {
             stars.add(new Star(SpaceMath.getRandomPoint(i)));
         }
+        playerShip = new SpaceShip(stars.get(100));
     }
 
     public static Galaxy getInstance() {
@@ -25,5 +27,9 @@ public class Galaxy {
 
     public List<Star> getStars() {
         return stars;
+    }
+
+    public SpaceShip getPlayerShip() {
+        return playerShip;
     }
 }
