@@ -17,9 +17,12 @@ import evgenyt.dangerousgalaxy.utils.SpaceMath;
 
 public class GalaxyView extends View  implements View.OnTouchListener {
 
+    // Draw brushes
     private Paint paintStar = new Paint();
     private Paint paintShip = new Paint();
     private Paint paintTarget = new Paint();
+    private Paint paintDebug = new Paint();
+
     private Galaxy galaxy = Galaxy.getInstance();
     private Star targetStar = galaxy.getStars().get(102);
     private List<Star> screenStars = new ArrayList<>();
@@ -36,11 +39,14 @@ public class GalaxyView extends View  implements View.OnTouchListener {
     private boolean pastZoom;
     private float oldDistance;
     private String debugStr = "";
+    private boolean moved = true;
 
     private void init() {
         paintStar.setColor(Color.WHITE);
         paintShip.setColor(Color.CYAN);
         paintTarget.setColor(Color.RED);
+        paintDebug.setColor(Color.WHITE);
+        paintDebug.setTextSize(30);
         setOnTouchListener(this);
     }
 
@@ -61,10 +67,13 @@ public class GalaxyView extends View  implements View.OnTouchListener {
 
     @Override
     public void onDraw(Canvas canvas) {
+        // draw stars
         canvas.drawColor(Color.BLACK);
         int r = ratio < 1 ? 1 : (int) ratio;
         paintStar.setTextSize(r * 2);
-        screenStars.clear();
+        if (moved) {
+            screenStars.clear();
+        }
         for (Star star: galaxy.getStars()) {
             long x = getScrX(star.getCoords().getX());
             long y = getScrY(star.getCoords().getY());
@@ -73,21 +82,102 @@ public class GalaxyView extends View  implements View.OnTouchListener {
                 if (ratio > 5) {
                     canvas.drawText(star.getName(), x + r, y, paintStar);
                 }
-                screenStars.add(star);
+                if (moved) {
+                    screenStars.add(star);
+                }
             }
         }
-        long x = getScrX(galaxy.getPlayerShip().getCurrentStar().getCoords().getX());
-        long y = getScrY(galaxy.getPlayerShip().getCurrentStar().getCoords().getY()) - r;
         int l = r < 10 ? 10 : r;
-        canvas.drawLine(x, y, x - l, y - l * 2, paintShip);
-        canvas.drawLine(x, y, x + l, y - l * 2, paintShip);
+        // draw destination
         long x1 = getScrX(targetStar.getCoords().getX());
         long y1 = getScrY(targetStar.getCoords().getY()) - r;
         canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
         canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
+        // draw ship
+        long x = getScrX(galaxy.getPlayerShip().getCurrentStar().getCoords().getX());
+        long y = getScrY(galaxy.getPlayerShip().getCurrentStar().getCoords().getY()) - r;
+        canvas.drawLine(x, y, x - l, y - l * 2, paintShip);
+        canvas.drawLine(x, y, x + l, y - l * 2, paintShip);
+        // draw path
         canvas.drawLine(x, y, x1, y1, paintStar);
+        // debug text
+        canvas.drawText(debugStr, 10, 100, paintDebug);
+        moved = false;
+    }
 
-        canvas.drawText(debugStr, 10, 100, paintStar);
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        moved = false;
+        boolean oneUp = false;
+        switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_POINTER_DOWN:
+                zooming = event.getPointerCount() == 2;
+                oldDistance = SpaceMath.distance(event.getX(0), event.getX(1),
+                        event.getY(0), event.getY(1));
+                break;
+            case MotionEvent.ACTION_POINTER_UP:
+                zooming = event.getPointerCount() != 2;
+                oneUp = true;
+                oldY = event.getY();
+                oldX = event.getX();
+                break;
+        }
+        switch(event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                if (!zooming) {
+                    oldY = event.getY();
+                    oldX = event.getX();
+                    for (Star star : getScreenStars()) {
+                        float distance = SpaceMath.distance(getScrX(star.getCoords().getX()),
+                                event.getX(),
+                                getScrY(star.getCoords().getY()),
+                                event.getY());
+                        if (distance <= ratio) {
+                            targetStar = star;
+                            break;
+                        }
+                    }
+                    Star star = galaxy.getPlayerShip().getCurrentStar();
+                    float distance = SpaceMath.distance(getScrX(star.getCoords().getX()),
+                            event.getX(),
+                            getScrY(star.getCoords().getY()),
+                            event.getY());
+                    debugStr = "D:" + distance +
+                            " Click:" + event.getX() + ":" + event.getY() +
+                            " Star:" + getScrX(star.getCoords().getX()) + ":" +
+                            getScrY(star.getCoords().getY());
+
+                }
+                break;
+            case MotionEvent.ACTION_MOVE:
+                if (zooming && oldDistance > 0 && event.getPointerCount() == 2) {
+                    float distance = SpaceMath.distance(event.getX(0), event.getX(1),
+                            event.getY(0), event.getY(1));
+                    setRatio(getRatio() * distance / oldDistance);
+                    oldDistance = distance;
+                    if (getRatio() < 0.1 ) {
+                        setRatio(0.1f);
+                    }
+                    pastZoom = true;
+                } else {
+                    if (pastZoom || oneUp) {
+                        pastZoom = false;
+                    } else {
+                        long deltaY = (long) ((oldY - event.getY()) / getRatio());
+                        long deltaX = (long) ((oldX - event.getX()) / getRatio());
+                        setCenterY(getCenterY() - deltaY);
+                        setCenterX(getCenterX() - deltaX);
+                        oldY = event.getY();
+                        oldX = event.getX();
+                    }
+                }
+                moved = true;
+                break;
+            case MotionEvent.ACTION_UP:
+                break;
+        }
+        v.invalidate();
+        return true;
     }
 
     public long getScrX(long x) {
@@ -126,67 +216,11 @@ public class GalaxyView extends View  implements View.OnTouchListener {
         return screenStars;
     }
 
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        boolean oneUp = false;
-        switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_POINTER_DOWN:
-                zooming = event.getPointerCount() == 2;
-                oldDistance = SpaceMath.distance(event.getX(0), event.getX(1),
-                        event.getY(0), event.getY(1));
-                break;
-            case MotionEvent.ACTION_POINTER_UP:
-                zooming = event.getPointerCount() != 2;
-                oneUp = true;
-                oldY = event.getY();
-                oldX = event.getX();
-                break;
-        }
-        switch(event.getAction()) {
-            case MotionEvent.ACTION_DOWN:
-                if (!zooming) {
-                    oldY = event.getY();
-                    oldX = event.getX();
-                    debugStr = "On screen: " + getScreenStars().size() +
-                            " " + event.getX() + ":" + event.getY();
-                    for (Star star : getScreenStars()) {
-                        if (SpaceMath.distance(getScrX(star.getCoords().getX()),
-                                getScrY(star.getCoords().getY()),
-                                event.getX(),
-                                event.getY()) <= ratio) {
-                            targetStar = star;
-                            break;
-                        }
-                    }
-                }
-                break;
-            case MotionEvent.ACTION_MOVE:
-                if (zooming && oldDistance > 0 && event.getPointerCount() == 2) {
-                    float distance = SpaceMath.distance(event.getX(0), event.getX(1),
-                            event.getY(0), event.getY(1));
-                    setRatio(getRatio() * distance / oldDistance);
-                    oldDistance = distance;
-                    if (getRatio() < 0.1 ) {
-                        setRatio(0.1f);
-                    }
-                    pastZoom = true;
-                } else {
-                    if (pastZoom || oneUp) {
-                        pastZoom = false;
-                    } else {
-                        long deltaY = (long) ((oldY - event.getY()) / getRatio());
-                        long deltaX = (long) ((oldX - event.getX()) / getRatio());
-                        setCenterY(getCenterY() - deltaY);
-                        setCenterX(getCenterX() - deltaX);
-                        oldY = event.getY();
-                        oldX = event.getX();
-                    }
-                }
-                break;
-            case MotionEvent.ACTION_UP:
-                break;
-        }
-        v.invalidate();
-        return true;
+    public Galaxy getGalaxy() {
+        return galaxy;
+    }
+
+    public Star getTargetStar() {
+        return targetStar;
     }
 }
