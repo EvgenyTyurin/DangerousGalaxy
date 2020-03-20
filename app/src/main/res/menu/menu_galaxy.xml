@@ -7,6 +7,15 @@
         android:enabled="true"
         android:title="Travel"
         android:visible="true"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+    />
 
+    <item
+        android:id="@+id/menu_galaxy_system"
+        android:enabled="true"
+        android:title="System"
+        android:visible="true"
+        app:showAsAction="always"
+    />
+    
 </menu>

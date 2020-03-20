@@ -2,6 +2,7 @@ package evgenyt.dangerousgalaxy.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -35,6 +36,10 @@ public class GalaxyActivity extends AppCompatActivity {
             case R.id.menu_galaxy_travel:
                 galaxyView.getGalaxy().getPlayerShip().setCurrentStar(galaxyView.getTargetStar());
                 galaxyView.invalidate();
+                return true;
+            case R.id.menu_galaxy_system:
+                Intent intent = new Intent(this, SystemActivity.class);
+                startActivity(intent);
                 return true;
             default: return super.onOptionsItemSelected(item);
         }

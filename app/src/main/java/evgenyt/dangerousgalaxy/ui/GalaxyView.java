@@ -24,7 +24,7 @@ public class GalaxyView extends View  implements View.OnTouchListener {
     private Paint paintDebug = new Paint();
 
     private Galaxy galaxy = Galaxy.getInstance();
-    private Star targetStar = galaxy.getStars().get(102);
+    private static Star targetStar = Galaxy.getInstance().getStars().get(102);
     private List<Star> screenStars = new ArrayList<>();
 
     // User camera
@@ -220,7 +220,7 @@ public class GalaxyView extends View  implements View.OnTouchListener {
         return galaxy;
     }
 
-    public Star getTargetStar() {
+    public static Star getTargetStar() {
         return targetStar;
     }
 }
