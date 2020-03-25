@@ -55,17 +55,21 @@ public class SpaceMath {
     }
 
     public static double getRandomAngle() {
-        double x = getNextRandom();
+        return getNextRandom() * Math.PI * 2;
+    }
+
+    public static double getNextRandom() {
+        double x = getNextSequence();
         String str = String.valueOf(x);
         str = reverseString(str);
         str = str.substring(0, str.indexOf('.'));
         x = Double.valueOf(str);
         x = x / 1000000000;
         x = x / 10000000;
-        return x * Math.PI * 2;
+        return x;
     }
 
-    public static double getNextRandom() {
+    public static double getNextSequence() {
         if (k)
             x += 1 / i;
         else
