@@ -45,6 +45,7 @@ public class Star {
     private String name;
     private StarClass starClass;
     private List<Planet> planets = new ArrayList<>();
+    private final static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public Star(SpaceMath.Point coords) {
         this.coords = coords;
@@ -56,10 +57,24 @@ public class Star {
                 break;
             }
         }
-        name = coords.toString();
+        name = generateName();
         int planetCount = (int) (SpaceMath.getNextRandom() * 10);
         for (int idx = 1; idx <= planetCount; idx++)
             planets.add(new Planet(name + " " + idx));
+    }
+
+    private String generateName() {
+        int length = alphabet.length();
+        int idxA = (int) (coords.getRadius() * 0.0001 * (length - 1));
+        if (idxA > length - 1)
+            idxA = length -1;
+        int idxB = (int) ((coords.getAngle() / (Math.PI * 2)) * (length - 1));
+        return new StringBuilder().append(alphabet.substring(idxA, idxA + 1))
+                .append(alphabet.substring(idxB, idxB + 1))
+                .append("-")
+                .append(Math.abs(coords.getX()))
+                .append("-")
+                .append(Math.abs(coords.getY())).toString();
     }
 
     public SpaceMath.Point getCoords() {

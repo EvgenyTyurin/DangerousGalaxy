@@ -16,7 +16,13 @@ import evgenyt.dangerousgalaxy.data.SpaceShip;
 import evgenyt.dangerousgalaxy.data.Star;
 import evgenyt.dangerousgalaxy.utils.SpaceMath;
 
+/**
+ * Galaxy map
+ */
+
 public class GalaxyView extends View  implements View.OnTouchListener {
+
+    public static final float MIN_RATIO = 0.5f;
 
     // Draw brushes
     private Paint paintStar = new Paint();
@@ -24,9 +30,12 @@ public class GalaxyView extends View  implements View.OnTouchListener {
     private Paint paintTarget = new Paint();
     private Paint paintDebug = new Paint();
 
-    private Galaxy galaxy = Galaxy.getInstance();
-    private SpaceShip playerShip = galaxy.getPlayerShip();
-    private static Star targetStar = Galaxy.getInstance().getStars().get(102);
+    // Init galaxy objects
+    private static Galaxy galaxy = Galaxy.getInstance();
+    private static SpaceShip playerShip = galaxy.getPlayerShip();
+    private static Star targetStar = playerShip.getCurrentStar();
+
+    // Stars displaying on screen
     private List<Star> screenStars = new ArrayList<>();
 
     // User camera
@@ -34,7 +43,7 @@ public class GalaxyView extends View  implements View.OnTouchListener {
     private long centerY = 0;
     private float ratio = 1;
 
-    // Touch listener
+    // Touch listener vars
     private double oldY;
     private double oldX;
     private boolean zooming;
@@ -48,7 +57,7 @@ public class GalaxyView extends View  implements View.OnTouchListener {
         paintShip.setColor(Color.CYAN);
         paintTarget.setColor(Color.RED);
         paintDebug.setColor(Color.WHITE);
-        paintDebug.setTextSize(30);
+        paintDebug.setTextSize(40);
         setOnTouchListener(this);
     }
 
@@ -67,6 +76,7 @@ public class GalaxyView extends View  implements View.OnTouchListener {
         init();
     }
 
+    // Draw galaxy map
     @Override
     public void onDraw(Canvas canvas) {
         // draw stars
@@ -103,14 +113,16 @@ public class GalaxyView extends View  implements View.OnTouchListener {
         // draw path
         canvas.drawLine(x, y, x1, y1, paintStar);
         // debug text
-        canvas.drawText(debugStr, 10, 100, paintDebug);
+        canvas.drawText(debugStr, 10, 50, paintDebug);
         moved = false;
     }
 
+    // Handle galaxy map controls
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         moved = false;
         boolean oneUp = false;
+        // Two fingers event
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_POINTER_DOWN:
                 zooming = event.getPointerCount() == 2;
@@ -125,6 +137,7 @@ public class GalaxyView extends View  implements View.OnTouchListener {
                 break;
         }
         switch(event.getAction()) {
+            // clicking
             case MotionEvent.ACTION_DOWN:
                 if (!zooming) {
                     oldY = event.getY();
@@ -138,27 +151,23 @@ public class GalaxyView extends View  implements View.OnTouchListener {
                             targetStar = star;
                             debugStr = "Target star: " + star.getName() +
                                     ", class: " + star.getStarClass() +
-                                    ", distance" + (int) SpaceMath.distance(playerShip.getCurrentStar().getCoords().getX(),
+                                    ", distance " + (int) SpaceMath.distance(playerShip.getCurrentStar().getCoords().getX(),
                                     star.getCoords().getX(), playerShip.getCurrentStar().getCoords().getY(),
                                     star.getCoords().getY()) + " l.y.";
                             break;
                         }
                     }
-                    Star star = galaxy.getPlayerShip().getCurrentStar();
-                    float distance = SpaceMath.distance(getScrX(star.getCoords().getX()),
-                            event.getX(),
-                            getScrY(star.getCoords().getY()),
-                            event.getY());
                 }
                 break;
+            // Moving and zooming
             case MotionEvent.ACTION_MOVE:
                 if (zooming && oldDistance > 0 && event.getPointerCount() == 2) {
                     float distance = SpaceMath.distance(event.getX(0), event.getX(1),
                             event.getY(0), event.getY(1));
                     setRatio(getRatio() * distance / oldDistance);
                     oldDistance = distance;
-                    if (getRatio() < 0.1 ) {
-                        setRatio(0.1f);
+                    if (getRatio() < MIN_RATIO ) {
+                        setRatio(MIN_RATIO);
                     }
                     pastZoom = true;
                 } else {

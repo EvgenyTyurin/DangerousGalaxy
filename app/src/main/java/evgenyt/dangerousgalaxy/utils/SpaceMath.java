@@ -18,9 +18,9 @@ public class SpaceMath {
 
         public Point(double angle, long radius) {
             this.angle = angle;
-            this.radius = radius;
-            x = (long) (radius * Math.cos(angle));
-            y = (long) (radius * Math.sin(angle));
+            this.radius = (long) radius / 10;
+            x = (long) (this.radius * Math.cos(angle));
+            y = (long) (this.radius * Math.sin(angle));
         }
 
         public void rotate(double delta) {
@@ -35,6 +35,14 @@ public class SpaceMath {
 
         public long getY() {
             return y;
+        }
+
+        public double getAngle() {
+            return angle;
+        }
+
+        public long getRadius() {
+            return radius;
         }
 
         @Override
