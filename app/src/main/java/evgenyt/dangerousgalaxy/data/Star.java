@@ -41,13 +41,21 @@ public class Star {
         }
     }
 
-
     private final SpaceMath.Point coords;
     private String name;
+    private StarClass starClass;
     private List<Planet> planets = new ArrayList<>();
 
     public Star(SpaceMath.Point coords) {
         this.coords = coords;
+        double random = SpaceMath.getNextRandom();
+        starClass = StarClass.M;
+        for (StarClass starCl : StarClass.values()) {
+            if (random >= starCl.getTreshLow() && random <= starCl.getTreshHi()) {
+                starClass = starCl;
+                break;
+            }
+        }
         name = coords.toString();
         int planetCount = (int) (SpaceMath.getNextRandom() * 10);
         for (int idx = 1; idx <= planetCount; idx++)
@@ -64,5 +72,9 @@ public class Star {
 
     public List<Planet> getPlanets() {
         return planets;
+    }
+
+    public StarClass getStarClass() {
+        return starClass;
     }
 }

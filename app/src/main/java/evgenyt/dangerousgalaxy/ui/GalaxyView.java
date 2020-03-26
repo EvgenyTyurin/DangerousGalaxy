@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import evgenyt.dangerousgalaxy.data.Galaxy;
+import evgenyt.dangerousgalaxy.data.SpaceShip;
 import evgenyt.dangerousgalaxy.data.Star;
 import evgenyt.dangerousgalaxy.utils.SpaceMath;
 
@@ -24,6 +25,7 @@ public class GalaxyView extends View  implements View.OnTouchListener {
     private Paint paintDebug = new Paint();
 
     private Galaxy galaxy = Galaxy.getInstance();
+    private SpaceShip playerShip = galaxy.getPlayerShip();
     private static Star targetStar = Galaxy.getInstance().getStars().get(102);
     private List<Star> screenStars = new ArrayList<>();
 
@@ -134,6 +136,11 @@ public class GalaxyView extends View  implements View.OnTouchListener {
                                 event.getY());
                         if (distance <= ratio) {
                             targetStar = star;
+                            debugStr = "Target star: " + star.getName() +
+                                    ", class: " + star.getStarClass() +
+                                    ", distance" + (int) SpaceMath.distance(playerShip.getCurrentStar().getCoords().getX(),
+                                    star.getCoords().getX(), playerShip.getCurrentStar().getCoords().getY(),
+                                    star.getCoords().getY()) + " l.y.";
                             break;
                         }
                     }
@@ -142,11 +149,6 @@ public class GalaxyView extends View  implements View.OnTouchListener {
                             event.getX(),
                             getScrY(star.getCoords().getY()),
                             event.getY());
-                    debugStr = "D:" + distance +
-                            " Click:" + event.getX() + ":" + event.getY() +
-                            " Star:" + getScrX(star.getCoords().getX()) + ":" +
-                            getScrY(star.getCoords().getY());
-
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
