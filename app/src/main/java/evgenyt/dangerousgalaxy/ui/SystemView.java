@@ -19,6 +19,7 @@ public class SystemView extends View implements View.OnTouchListener {
     private final Paint paintStar = new Paint();
     private final Paint paintShip = new Paint();
     private final Paint paintTarget = new Paint();
+    private final Paint paintPlanet = new Paint();
     private Planet targetPlanet;
 
     public SystemView(Context context) {
@@ -35,14 +36,19 @@ public class SystemView extends View implements View.OnTouchListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         canvas.drawColor(Color.BLACK);
+        // Draw star
         paintStar.setColor(systemStar.getStarClass().getColor().toArgb());
         canvas.drawCircle(220, 120, 100, paintStar);
         canvas.drawText(systemStar.getName(), 350, 120, paintText);
+        // Draw planets
         for (int idx = 0; idx < systemStar.getPlanets().size(); idx++) {
+            Planet planet = systemStar.getPlanets().get(idx);
             int y = idx * 150 + 300;
-            canvas.drawCircle(220, y, 50, paintText);
-            canvas.drawText(systemStar.getPlanets().get(idx).getName(), 350, y, paintText);
+            paintPlanet.setColor(planet.getPlanetType().getColor().toArgb());
+            canvas.drawCircle(220, y, 50, paintPlanet);
+            canvas.drawText(planet.getName(), 350, y, paintText);
         }
+        // Draw ship and target marks
         SpaceShip playerShip = Galaxy.getInstance().getPlayerShip();
         if (systemStar == playerShip.getCurrentStar()) {
             int x = 100;

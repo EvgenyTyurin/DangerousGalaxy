@@ -4,28 +4,38 @@ import android.graphics.Color;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import evgenyt.dangerousgalaxy.utils.SpaceMath;
 
+/**
+ * Star
+ */
+
 public class Star {
 
+    // Class of star
     public enum StarClass {
-        M(Color.valueOf(Color.RED), 0, 0.76),
-        K(Color.valueOf(Color.RED), 0.7645, 0.89),
-        G(Color.valueOf(Color.YELLOW), 0.89, 0.96),
-        F(Color.valueOf(Color.YELLOW), 0.96, 0.99),
-        A(Color.valueOf(Color.WHITE), 0.99, 0.996),
-        B(Color.valueOf(Color.WHITE), 0.996, 0.999),
-        O(Color.valueOf(Color.CYAN), 0.999, 1);
+        M(Color.valueOf(Color.RED), 0, 0.76, 0, 0),
+        K(Color.valueOf(Color.RED), 0.7645, 0.89, 1, 1),
+        G(Color.valueOf(Color.YELLOW), 0.89, 0.96, 2, 4),
+        F(Color.valueOf(Color.YELLOW), 0.96, 0.99, 4, 5),
+        A(Color.valueOf(Color.WHITE), 0.99, 0.996, 5, 6),
+        B(Color.valueOf(Color.WHITE), 0.996, 0.999, 7, 8),
+        O(Color.valueOf(Color.CYAN), 0.999, 1, 9, 10);
 
         private final Color color;
         private final double treshLow;
         private final double treshHi;
+        private int boilOrbit;
+        private int freezOrbit;
 
-        StarClass(Color color, double treshLow, double treshHi) {
+        StarClass(Color color, double treshLow, double treshHi, int boilOrbit, int freezOrbit) {
             this.color = color;
             this.treshLow = treshLow;
             this.treshHi = treshHi;
+            this.boilOrbit = boilOrbit;
+            this.freezOrbit = freezOrbit;
         }
 
         public Color getColor() {
@@ -38,6 +48,14 @@ public class Star {
 
         public double getTreshHi() {
             return treshHi;
+        }
+
+        public int getBoilOrbit() {
+            return boilOrbit;
+        }
+
+        public int getFreezOrbit() {
+            return freezOrbit;
         }
     }
 
@@ -60,9 +78,10 @@ public class Star {
         name = generateName();
         int planetCount = (int) (SpaceMath.getNextRandom() * 10);
         for (int idx = 1; idx <= planetCount; idx++)
-            planets.add(new Planet(name + " " + idx));
+            planets.add(new Planet(name + " " + idx, this, idx));
     }
 
+    // Star name generator AB-XXXX-YYYY
     private String generateName() {
         int length = alphabet.length();
         int idxA = (int) (coords.getRadius() * 0.0001 * (length - 1));
@@ -91,5 +110,18 @@ public class Star {
 
     public StarClass getStarClass() {
         return starClass;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Star star = (Star) o;
+        return Objects.equals(name, star.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }
