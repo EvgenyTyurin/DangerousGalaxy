@@ -23,6 +23,7 @@ import evgenyt.dangerousgalaxy.utils.SpaceMath;
 public class GalaxyView extends View  implements View.OnTouchListener {
 
     public static final float MIN_RATIO = 0.5f;
+    public static final float INIT_RATIO = 10f;
 
     // Draw brushes
     private Paint paintStar = new Paint();
@@ -34,14 +35,15 @@ public class GalaxyView extends View  implements View.OnTouchListener {
     private static Galaxy galaxy = Galaxy.getInstance();
     private static SpaceShip playerShip = galaxy.getPlayerShip();
     private static Star targetStar = playerShip.getCurrentStar();
+    private static Star currentStar = playerShip.getCurrentStar();
 
     // Stars displaying on screen
     private List<Star> screenStars = new ArrayList<>();
 
     // User camera
-    private long centerX = 0;
-    private long centerY = 0;
-    private float ratio = 1;
+    private long centerX = -1 * currentStar.getCoords().getX();
+    private long centerY = -1 * currentStar.getCoords().getY();
+    private float ratio = INIT_RATIO;
 
     // Touch listener vars
     private double oldY;

@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">DangerousGalaxy</string>
+    <string name="app_name">Dangerous Galaxy</string>
+    <string name="txt_market">market</string>
+    <string name="txt_missions">missions</string>
 </resources>

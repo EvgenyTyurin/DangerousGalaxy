@@ -10,4 +10,12 @@
         app:showAsAction="always"
     />
 
+    <item
+        android:id="@+id/menu_system_land"
+        android:enabled="true"
+        android:title="Land"
+        android:visible="true"
+        app:showAsAction="always"
+    />
+
 </menu>

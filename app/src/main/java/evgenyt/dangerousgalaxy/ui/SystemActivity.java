@@ -11,17 +11,22 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import evgenyt.dangerousgalaxy.R;
 import evgenyt.dangerousgalaxy.data.Galaxy;
+import evgenyt.dangerousgalaxy.data.SpaceShip;
+import evgenyt.dangerousgalaxy.data.Star;
 
 public class SystemActivity extends AppCompatActivity {
 
     private SystemView systemView;
+    SpaceShip playerShip = Galaxy.getInstance().getPlayerShip();
+    Star systemStar = GalaxyView.getTargetStar();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         systemView = new SystemView(this);
         setContentView(systemView);
-        setTitle(GalaxyView.getTargetStar().getName());
+        setTitle(systemStar.getName());
+        playerShip.setCurrentPlanet(null);
     }
 
     /** Add menu to window */
@@ -38,9 +43,15 @@ public class SystemActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_system_travel:
                 if (systemView.getTargetPlanet() != null) {
-                    Galaxy.getInstance().getPlayerShip().setCurrentPlanet(systemView.getTargetPlanet());
+                    playerShip.setCurrentPlanet(systemView.getTargetPlanet());
                 }
                 systemView.invalidate();
+                return true;
+            case R.id.menu_system_land:
+                if (playerShip.getCurrentStar() == systemStar && playerShip.getCurrentPlanet() != null) {
+                    Intent intent = new Intent(this, SpacePortActivity.class);
+                    startActivity(intent);
+                }
                 return true;
             default: return super.onOptionsItemSelected(item);
         }

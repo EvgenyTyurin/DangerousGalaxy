@@ -21,6 +21,8 @@ public class SystemView extends View implements View.OnTouchListener {
     private final Paint paintTarget = new Paint();
     private final Paint paintPlanet = new Paint();
     private Planet targetPlanet;
+    SpaceShip playerShip = Galaxy.getInstance().getPlayerShip();
+
 
     public SystemView(Context context) {
         super(context);
@@ -49,7 +51,6 @@ public class SystemView extends View implements View.OnTouchListener {
             canvas.drawText(planet.getName(), 350, y, paintText);
         }
         // Draw ship and target marks
-        SpaceShip playerShip = Galaxy.getInstance().getPlayerShip();
         if (systemStar == playerShip.getCurrentStar()) {
             int x = 100;
             int y = 120;
