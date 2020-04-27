@@ -2,4 +2,8 @@
     <string name="app_name">Dangerous Galaxy</string>
     <string name="txt_market">market</string>
     <string name="txt_missions">missions</string>
+    <array name="market">
+        <item>Wheat;100</item>
+        <item>Gold;100000</item>
+    </array>
 </resources>
