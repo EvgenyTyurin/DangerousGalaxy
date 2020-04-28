@@ -11,11 +11,23 @@ public class Galaxy {
     private List<Star> stars = new ArrayList<>(STARS_NUM);
     private SpaceShip playerShip;
 
+    // Reality
+    private static Star SOL = new Star(SpaceMath.getRandomPoint(70000));
+    private static Planet MERCURY = new Planet("Mercury", SOL, 0);
+
     private Galaxy(){
-        for (int i = 0; i < STARS_NUM; i++) {
+        // Reality injector
+        SOL.setName("Sol");
+        SOL.setStarClass(Star.StarClass.G);
+        SOL.getPlanets().clear();
+        SOL.getPlanets().add(MERCURY);
+
+        stars.add(SOL);
+        playerShip = new SpaceShip(SOL);
+        // Random stars generation
+        for (int i = 1; i < STARS_NUM; i++) {
             stars.add(new Star(SpaceMath.getRandomPoint(i)));
         }
-        playerShip = new SpaceShip(stars.get(50000));
     }
 
     public static Galaxy getInstance() {

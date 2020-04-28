@@ -124,4 +124,12 @@ public class Star {
     public int hashCode() {
         return Objects.hash(name);
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setStarClass(StarClass starClass) {
+        this.starClass = starClass;
+    }
 }
