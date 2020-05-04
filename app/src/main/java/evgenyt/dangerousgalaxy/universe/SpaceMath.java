@@ -1,4 +1,4 @@
-package evgenyt.dangerousgalaxy.utils;
+package evgenyt.dangerousgalaxy.universe;
 
 import static java.lang.Math.sqrt;
 
@@ -97,6 +97,40 @@ public class SpaceMath {
         }
         // Char array to string
         return String.valueOf(charArray);
+    }
+
+    // Generate random planet near star
+    static Planet generateRandomPlanet(String name , Star star, int orbit) {
+        Planet planet = new Planet();
+        planet.setName(name);
+        double rand = SpaceMath.getNextRandom();
+        if (rand <= 0.333) {
+            planet.setPlanetType(Planet.PlanetType.GAS_GIANT);
+        } else {
+            // Water on planet?
+            if (rand >= 0.666) {
+                if (orbit >= star.getStarClass().getBoilOrbit() && orbit <= star.getStarClass().getFreezOrbit()) {
+                    planet.setPlanetType(Planet.PlanetType.EARTH_LIKE);
+                } else {
+                    if (orbit < star.getStarClass().getBoilOrbit()) {
+                        planet.setPlanetType(Planet.PlanetType.TOXIC);
+                    } else {
+                        planet.setPlanetType(Planet.PlanetType.ICY);
+                    }
+                }
+            } else {
+                planet.setPlanetType(Planet.PlanetType.BARREN);
+            }
+        }
+        return planet;
+    }
+
+    // Generate random planet near star
+    static Planet generatePlanet(String name, Planet.PlanetType planetType) {
+        Planet planet = new Planet();
+        planet.setName(name);
+        planet.setPlanetType(planetType);
+        return planet;
     }
 
 }

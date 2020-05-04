@@ -11,10 +11,10 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import evgenyt.dangerousgalaxy.data.Galaxy;
-import evgenyt.dangerousgalaxy.data.SpaceShip;
-import evgenyt.dangerousgalaxy.data.Star;
-import evgenyt.dangerousgalaxy.utils.SpaceMath;
+import evgenyt.dangerousgalaxy.universe.Galaxy;
+import evgenyt.dangerousgalaxy.universe.SpaceShip;
+import evgenyt.dangerousgalaxy.universe.Star;
+import evgenyt.dangerousgalaxy.universe.SpaceMath;
 
 /**
  * Galaxy map

@@ -1,10 +1,8 @@
-package evgenyt.dangerousgalaxy.data;
+package evgenyt.dangerousgalaxy.universe;
 
 import android.graphics.Color;
 
 import java.util.Objects;
-
-import evgenyt.dangerousgalaxy.utils.SpaceMath;
 
 public class Planet {
 
@@ -28,6 +26,10 @@ public class Planet {
 
     private String name;
     private PlanetType planetType;
+    private boolean water;
+
+    public Planet() {
+    }
 
     public Planet(String name , Star star, int orbit) {
         this.name = name;
@@ -52,12 +54,25 @@ public class Planet {
         }
     }
 
+
     public String getName() {
         return name;
     }
 
     public PlanetType getPlanetType() {
         return planetType;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPlanetType(PlanetType planetType) {
+        this.planetType = planetType;
+    }
+
+    public void setWater(boolean water) {
+        this.water = water;
     }
 
     @Override

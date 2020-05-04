@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import evgenyt.dangerousgalaxy.R;
-import evgenyt.dangerousgalaxy.data.Galaxy;
+import evgenyt.dangerousgalaxy.universe.Galaxy;
 
 public class SpacePortActivity extends AppCompatActivity {
 

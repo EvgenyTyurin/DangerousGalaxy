@@ -1,12 +1,10 @@
-package evgenyt.dangerousgalaxy.data;
+package evgenyt.dangerousgalaxy.universe;
 
 import android.graphics.Color;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import evgenyt.dangerousgalaxy.utils.SpaceMath;
 
 /**
  * Star
@@ -79,6 +77,12 @@ public class Star {
         int planetCount = (int) (SpaceMath.getNextRandom() * 10);
         for (int idx = 1; idx <= planetCount; idx++)
             planets.add(new Planet(name + " " + idx, this, idx));
+    }
+
+    // Add some planets to star
+    void addPlanets(Planet... planets) {
+        for (Planet planet : planets)
+            this.planets.add(planet);
     }
 
     // Star name generator AB-XXXX-YYYY

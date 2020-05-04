@@ -7,10 +7,10 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.View;
 
-import evgenyt.dangerousgalaxy.data.Galaxy;
-import evgenyt.dangerousgalaxy.data.Planet;
-import evgenyt.dangerousgalaxy.data.SpaceShip;
-import evgenyt.dangerousgalaxy.data.Star;
+import evgenyt.dangerousgalaxy.universe.Galaxy;
+import evgenyt.dangerousgalaxy.universe.Planet;
+import evgenyt.dangerousgalaxy.universe.SpaceShip;
+import evgenyt.dangerousgalaxy.universe.Star;
 
 public class SystemView extends View implements View.OnTouchListener {
 

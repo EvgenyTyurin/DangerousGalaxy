@@ -1,4 +1,4 @@
-package evgenyt.dangerousgalaxy.data;
+package evgenyt.dangerousgalaxy.universe;
 
 public class SpaceShip {
 

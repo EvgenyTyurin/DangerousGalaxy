@@ -10,9 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import evgenyt.dangerousgalaxy.R;
-import evgenyt.dangerousgalaxy.data.Galaxy;
-import evgenyt.dangerousgalaxy.data.SpaceShip;
-import evgenyt.dangerousgalaxy.data.Star;
+import evgenyt.dangerousgalaxy.universe.Galaxy;
+import evgenyt.dangerousgalaxy.universe.SpaceShip;
+import evgenyt.dangerousgalaxy.universe.Star;
 
 public class SystemActivity extends AppCompatActivity {
 
