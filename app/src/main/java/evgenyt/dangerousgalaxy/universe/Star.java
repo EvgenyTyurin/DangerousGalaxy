@@ -63,6 +63,12 @@ public class Star {
     private List<Planet> planets = new ArrayList<>();
     private final static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+    public Star (SpaceMath.Point coords, String name, StarClass starClass) {
+        this.coords = coords;
+        this.name = name;
+        this.starClass = starClass;
+    }
+
     public Star(SpaceMath.Point coords) {
         this.coords = coords;
         double random = SpaceMath.getNextRandom();
