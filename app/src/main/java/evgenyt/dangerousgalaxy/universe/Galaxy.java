@@ -19,7 +19,7 @@ public class Galaxy {
     private static Star LUYTEN_726_8 = new Star(new SpaceMath.Point(8011, -15), "LUYTEN 726-8", Star.StarClass.M);
     private static Star ROSS_154 = new Star(new SpaceMath.Point(8010, 15), "ROSS 154", Star.StarClass.M);
     private static Star ROSS_248 = new Star(new SpaceMath.Point(8005, 20), "ROSS 248", Star.StarClass.M);
-    private static Star EPSILON_ERIDANI = new Star(new SpaceMath.Point(7980, 5), "EPSILON_ERIDANI", Star.StarClass.K);
+    private static Star EPSILON_ERIDANI = new Star(new SpaceMath.Point(7980, 5), "EPSILON ERIDANI", Star.StarClass.K);
     private static Star LACAILLE_9352 = new Star(new SpaceMath.Point(7980, 11), "LACAILLE 9352", Star.StarClass.M);
 
     // Solar system planets
@@ -33,9 +33,13 @@ public class Galaxy {
     private static Planet NEPTUNE = SpaceMath.generatePlanet("Neptune", Planet.PlanetType.GAS_GIANT);;;
     private static Planet PLUTO = SpaceMath.generatePlanet("Pluto", Planet.PlanetType.BARREN);;;
 
+    // Fantasy planets
+    private static Planet GAIA = SpaceMath.generatePlanet("Gaia", Planet.PlanetType.EARTH_LIKE);
+
     private Galaxy(){
         // Real star systems generation
         SOL.setPlanets(MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE, PLUTO);
+        ALPHA_CENTAURI.setPlanets(GAIA);
         stars.add(SOL);
         stars.add(ALPHA_CENTAURI);
         stars.add(BARNARDS_STAR);
