@@ -10,17 +10,17 @@ public class Galaxy {
     private SpaceShip playerShip;
 
     // Sol and closest stars
-    private static Star SOL = new Star(new SpaceMath.Point(0, 80000), "SOL", Star.StarClass.G);
-    private static Star ALPHA_CENTAURI = new Star(new SpaceMath.Point(0.0005, 80050), "ALPHA CENTAURY", Star.StarClass.G);
-    private static Star BARNARDS_STAR = new Star(new SpaceMath.Point(-0.0007, 79951), "BARNARD'S STAR", Star.StarClass.M);
-    private static Star WOLF_359 = new Star(new SpaceMath.Point(0.0004, 79940), "WOLF 359", Star.StarClass.M);
-    private static Star LALANDE_21185 = new Star(new SpaceMath.Point(0.0015, 79960), "LALANDE 21185", Star.StarClass.M);
-    private static Star SIRIUS = new Star(new SpaceMath.Point(0.0001, 79920), "SIRIUS", Star.StarClass.A);
-    private static Star LUYTEN_726_8 = new Star(new SpaceMath.Point(0.0027, 80020), "LUYTEN 726-8", Star.StarClass.M);
-    private static Star ROSS_154 = new Star(new SpaceMath.Point(-0.0015, 80010), "ROSS 154", Star.StarClass.M);
-    private static Star ROSS_248 = new Star(new SpaceMath.Point(-0.0015, 79900), "ROSS 248", Star.StarClass.M);
-    private static Star EPSILON_ERIDANI = new Star(new SpaceMath.Point(-0.0003, 79850), "EPSILON_ERIDANI", Star.StarClass.K);
-    private static Star LACAILLE_9352 = new Star(new SpaceMath.Point(-0.0003, 80150), "LACAILLE 9352", Star.StarClass.M);
+    private static Star SOL = new Star(new SpaceMath.Point(8000l, 0l), "SOL", Star.StarClass.G);
+    private static Star ALPHA_CENTAURI = new Star(new SpaceMath.Point(8009l, 0l), "ALPHA CENTAURY", Star.StarClass.G);
+    private static Star BARNARDS_STAR = new Star(new SpaceMath.Point(8008, 7), "BARNARD'S STAR", Star.StarClass.M);
+    private static Star WOLF_359 = new Star(new SpaceMath.Point(7985, -2), "WOLF 359", Star.StarClass.M);
+    private static Star LALANDE_21185 = new Star(new SpaceMath.Point(7987, -10), "LALANDE 21185", Star.StarClass.M);
+    private static Star SIRIUS = new Star(new SpaceMath.Point(7991, 14), "SIRIUS", Star.StarClass.A);
+    private static Star LUYTEN_726_8 = new Star(new SpaceMath.Point(8011, -15), "LUYTEN 726-8", Star.StarClass.M);
+    private static Star ROSS_154 = new Star(new SpaceMath.Point(8010, 15), "ROSS 154", Star.StarClass.M);
+    private static Star ROSS_248 = new Star(new SpaceMath.Point(8005, 20), "ROSS 248", Star.StarClass.M);
+    private static Star EPSILON_ERIDANI = new Star(new SpaceMath.Point(7980, 5), "EPSILON_ERIDANI", Star.StarClass.K);
+    private static Star LACAILLE_9352 = new Star(new SpaceMath.Point(7980, 11), "LACAILLE 9352", Star.StarClass.M);
 
     // Solar system planets
     private static Planet MERCURY = SpaceMath.generatePlanet("Mercury", Planet.PlanetType.BARREN);
@@ -34,7 +34,7 @@ public class Galaxy {
     private static Planet PLUTO = SpaceMath.generatePlanet("Pluto", Planet.PlanetType.BARREN);;;
 
     private Galaxy(){
-        // Reality injector
+        // Real star systems generation
         SOL.addPlanets(MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE, PLUTO);
         stars.add(SOL);
         stars.add(ALPHA_CENTAURI);

@@ -16,6 +16,11 @@ public class SpaceMath {
         private double angle;
         private long radius;
 
+        Point(long x, long y) {
+            this.x = x;
+            this.y = y;
+        }
+
         public Point(double angle, long radius) {
             this.angle = angle;
             this.radius = (long) radius / 10;
@@ -56,6 +61,11 @@ public class SpaceMath {
         float y = y0 - y1;
         return (float)sqrt(x * x + y * y);
     }
+
+    public static float distanceLY(float x0, float x1, float y0, float y1) {
+        return distance(x0, x1, 0, y1) / 2;
+    }
+
 
     public static Point getRandomPoint(long r) {
         double angle = getRandomAngle();
