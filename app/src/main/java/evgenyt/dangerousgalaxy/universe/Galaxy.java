@@ -35,7 +35,7 @@ public class Galaxy {
 
     private Galaxy(){
         // Real star systems generation
-        SOL.addPlanets(MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE, PLUTO);
+        SOL.setPlanets(MERCURY, VENUS, EARTH, MARS, JUPITER, SATURN, URANUS, NEPTUNE, PLUTO);
         stars.add(SOL);
         stars.add(ALPHA_CENTAURI);
         stars.add(BARNARDS_STAR);

@@ -67,6 +67,7 @@ public class Star {
         this.coords = coords;
         this.name = name;
         this.starClass = starClass;
+        generatePlanets();
     }
 
     public Star(SpaceMath.Point coords) {
@@ -80,13 +81,18 @@ public class Star {
             }
         }
         name = generateName();
+        generatePlanets();
+    }
+
+    void generatePlanets() {
         int planetCount = (int) (SpaceMath.getNextRandom() * 10);
         for (int idx = 1; idx <= planetCount; idx++)
             planets.add(new Planet(name + " " + idx, this, idx));
     }
 
     // Add some planets to star
-    void addPlanets(Planet... planets) {
+    void setPlanets(Planet... planets) {
+        this.planets.clear();
         for (Planet planet : planets)
             this.planets.add(planet);
     }
