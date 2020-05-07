@@ -24,9 +24,12 @@ public class Planet {
         }
     }
 
+    public enum PlanetEconomy {UNINHABITED, AGRICULTURE, EXTRACTION, INDUSTRIAL, POSTINDUSTRIAL }
+
     private String name;
     private PlanetType planetType;
     private boolean water;
+    private PlanetEconomy planetEconomy = PlanetEconomy.UNINHABITED;
 
     public Planet() {
     }
@@ -73,6 +76,14 @@ public class Planet {
 
     public void setWater(boolean water) {
         this.water = water;
+    }
+
+    public PlanetEconomy getPlanetEconomy() {
+        return planetEconomy;
+    }
+
+    public void setPlanetEconomy(PlanetEconomy planetEconomy) {
+        this.planetEconomy = planetEconomy;
     }
 
     @Override

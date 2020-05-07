@@ -48,7 +48,7 @@ public class SystemView extends View implements View.OnTouchListener {
             int y = idx * 150 + 300;
             paintPlanet.setColor(planet.getPlanetType().getColor().toArgb());
             canvas.drawCircle(220, y, 50, paintPlanet);
-            canvas.drawText(planet.getName(), 350, y, paintText);
+            canvas.drawText(planet.getName() + ": " + planet.getPlanetEconomy(), 350, y, paintText);
         }
         // Draw ship and target marks
         if (systemStar == playerShip.getCurrentStar()) {

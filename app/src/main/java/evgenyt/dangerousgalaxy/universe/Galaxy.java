@@ -27,11 +27,11 @@ public class Galaxy {
     private static Planet VENUS = SpaceMath.generatePlanet("Venus", Planet.PlanetType.TOXIC);
     private static Planet EARTH = SpaceMath.generatePlanet("Earth", Planet.PlanetType.EARTH_LIKE);
     private static Planet MARS = SpaceMath.generatePlanet("Mars", Planet.PlanetType.BARREN);
-    private static Planet JUPITER = SpaceMath.generatePlanet("Jupiter", Planet.PlanetType.GAS_GIANT);;
-    private static Planet SATURN = SpaceMath.generatePlanet("Saturn", Planet.PlanetType.GAS_GIANT);;;
-    private static Planet URANUS = SpaceMath.generatePlanet("Uranus", Planet.PlanetType.GAS_GIANT);;;
-    private static Planet NEPTUNE = SpaceMath.generatePlanet("Neptune", Planet.PlanetType.GAS_GIANT);;;
-    private static Planet PLUTO = SpaceMath.generatePlanet("Pluto", Planet.PlanetType.BARREN);;;
+    private static Planet JUPITER = SpaceMath.generatePlanet("Jupiter", Planet.PlanetType.GAS_GIANT);
+    private static Planet SATURN = SpaceMath.generatePlanet("Saturn", Planet.PlanetType.GAS_GIANT);
+    private static Planet URANUS = SpaceMath.generatePlanet("Uranus", Planet.PlanetType.GAS_GIANT);
+    private static Planet NEPTUNE = SpaceMath.generatePlanet("Neptune", Planet.PlanetType.GAS_GIANT);
+    private static Planet PLUTO = SpaceMath.generatePlanet("Pluto", Planet.PlanetType.BARREN);
 
     // Fantasy planets
     private static Planet GAIA = SpaceMath.generatePlanet("Gaia", Planet.PlanetType.EARTH_LIKE);

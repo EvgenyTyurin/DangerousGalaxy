@@ -86,8 +86,11 @@ public class Star {
 
     void generatePlanets() {
         int planetCount = (int) (SpaceMath.getNextRandom() * 10);
-        for (int idx = 1; idx <= planetCount; idx++)
-            planets.add(new Planet(name + " " + idx, this, idx));
+        for (int idx = 1; idx <= planetCount; idx++) {
+            Planet planet = new Planet(name + " " + idx, this, idx);
+            SpaceMath.generateEconomy(planet);
+            planets.add(planet);
+        }
     }
 
     // Add some planets to star

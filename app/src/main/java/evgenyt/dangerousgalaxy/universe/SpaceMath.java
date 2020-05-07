@@ -135,12 +135,75 @@ public class SpaceMath {
         return planet;
     }
 
-    // Generate random planet near star
+    // Generate planet near star
     static Planet generatePlanet(String name, Planet.PlanetType planetType) {
         Planet planet = new Planet();
         planet.setName(name);
         planet.setPlanetType(planetType);
+        generateEconomy(planet);
         return planet;
+    }
+
+    static void generateEconomy(Planet planet) {
+        double rand2 = SpaceMath.getNextRandom();
+        switch (planet.getPlanetType()) {
+            case EARTH_LIKE:
+                if (rand2 < 0.05) {
+                    planet.setPlanetEconomy(Planet.PlanetEconomy.UNINHABITED);
+                }
+                else {
+                    if (rand2 < 0.4) {
+                        planet.setPlanetEconomy(Planet.PlanetEconomy.AGRICULTURE);
+                    } else {
+                        if (rand2 < 0.5) {
+                            planet.setPlanetEconomy(Planet.PlanetEconomy.EXTRACTION);
+                        } else {
+                            if (rand2 < 0.7) {
+                                planet.setPlanetEconomy(Planet.PlanetEconomy.INDUSTRIAL);
+                            } else {
+                                planet.setPlanetEconomy(Planet.PlanetEconomy.POSTINDUSTRIAL);
+                            }
+                        }
+                    }
+                }
+                break;
+            case BARREN:
+                if (rand2 < 0.4) {
+                    planet.setPlanetEconomy(Planet.PlanetEconomy.UNINHABITED);
+                }
+                else {
+                    if (rand2 < 0.8) {
+                        planet.setPlanetEconomy(Planet.PlanetEconomy.EXTRACTION);
+                    } else {
+                        if (rand2 < 0.98) {
+                            planet.setPlanetEconomy(Planet.PlanetEconomy.INDUSTRIAL);
+                        } else {
+                            planet.setPlanetEconomy(Planet.PlanetEconomy.POSTINDUSTRIAL);
+                        }
+                    }
+                }
+                break;
+            case ICY:
+                if (rand2 < 0.6) {
+                    planet.setPlanetEconomy(Planet.PlanetEconomy.UNINHABITED);
+                }
+                else {
+                    if (rand2 < 0.9) {
+                        planet.setPlanetEconomy(Planet.PlanetEconomy.EXTRACTION);
+                    } else {
+                        planet.setPlanetEconomy(Planet.PlanetEconomy.INDUSTRIAL);
+                    }
+                }
+                break;
+            case TOXIC:
+                if (rand2 < 0.8) {
+                    planet.setPlanetEconomy(Planet.PlanetEconomy.UNINHABITED);
+                }
+                else {
+                    planet.setPlanetEconomy(Planet.PlanetEconomy.EXTRACTION);
+                }
+                break;
+        }
     }
 
 }
