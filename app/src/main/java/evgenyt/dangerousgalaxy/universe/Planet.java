@@ -24,12 +24,12 @@ public class Planet {
         }
     }
 
-    public enum PlanetEconomy {UNINHABITED, AGRICULTURE, EXTRACTION, INDUSTRIAL, POSTINDUSTRIAL }
+    // public enum PlanetEconomy {UNINHABITED, AGRICULTURE, EXTRACTION, INDUSTRIAL, POSTINDUSTRIAL }
 
     private String name;
     private PlanetType planetType;
     private boolean water;
-    private PlanetEconomy planetEconomy = PlanetEconomy.UNINHABITED;
+    private Economy planetEconomy = new Economy(Economy.EconomyType.UNINHABITED);
 
     public Planet() {
     }
@@ -78,11 +78,11 @@ public class Planet {
         this.water = water;
     }
 
-    public PlanetEconomy getPlanetEconomy() {
+    public Economy getPlanetEconomy() {
         return planetEconomy;
     }
 
-    public void setPlanetEconomy(PlanetEconomy planetEconomy) {
+    public void setPlanetEconomy(Economy planetEconomy) {
         this.planetEconomy = planetEconomy;
     }
 

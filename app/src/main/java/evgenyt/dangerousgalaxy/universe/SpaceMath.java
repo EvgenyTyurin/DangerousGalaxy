@@ -149,19 +149,19 @@ public class SpaceMath {
         switch (planet.getPlanetType()) {
             case EARTH_LIKE:
                 if (rand2 < 0.05) {
-                    planet.setPlanetEconomy(Planet.PlanetEconomy.UNINHABITED);
+                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED));
                 }
                 else {
                     if (rand2 < 0.4) {
-                        planet.setPlanetEconomy(Planet.PlanetEconomy.AGRICULTURE);
+                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.AGRICULTURE));
                     } else {
                         if (rand2 < 0.5) {
-                            planet.setPlanetEconomy(Planet.PlanetEconomy.EXTRACTION);
+                            planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION));
                         } else {
                             if (rand2 < 0.7) {
-                                planet.setPlanetEconomy(Planet.PlanetEconomy.INDUSTRIAL);
+                                planet.setPlanetEconomy(new Economy(Economy.EconomyType.INDUSTRIAL));
                             } else {
-                                planet.setPlanetEconomy(Planet.PlanetEconomy.POSTINDUSTRIAL);
+                                planet.setPlanetEconomy(new Economy(Economy.EconomyType.POSTINDUSTRIAL));
                             }
                         }
                     }
@@ -169,38 +169,38 @@ public class SpaceMath {
                 break;
             case BARREN:
                 if (rand2 < 0.4) {
-                    planet.setPlanetEconomy(Planet.PlanetEconomy.UNINHABITED);
+                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED));
                 }
                 else {
                     if (rand2 < 0.8) {
-                        planet.setPlanetEconomy(Planet.PlanetEconomy.EXTRACTION);
+                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION));
                     } else {
                         if (rand2 < 0.98) {
-                            planet.setPlanetEconomy(Planet.PlanetEconomy.INDUSTRIAL);
+                            planet.setPlanetEconomy(new Economy(Economy.EconomyType.INDUSTRIAL));
                         } else {
-                            planet.setPlanetEconomy(Planet.PlanetEconomy.POSTINDUSTRIAL);
+                            planet.setPlanetEconomy(new Economy(Economy.EconomyType.POSTINDUSTRIAL));
                         }
                     }
                 }
                 break;
             case ICY:
                 if (rand2 < 0.6) {
-                    planet.setPlanetEconomy(Planet.PlanetEconomy.UNINHABITED);
+                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED));
                 }
                 else {
                     if (rand2 < 0.9) {
-                        planet.setPlanetEconomy(Planet.PlanetEconomy.EXTRACTION);
+                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION));
                     } else {
-                        planet.setPlanetEconomy(Planet.PlanetEconomy.INDUSTRIAL);
+                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.INDUSTRIAL));
                     }
                 }
                 break;
             case TOXIC:
                 if (rand2 < 0.8) {
-                    planet.setPlanetEconomy(Planet.PlanetEconomy.UNINHABITED);
+                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED));
                 }
                 else {
-                    planet.setPlanetEconomy(Planet.PlanetEconomy.EXTRACTION);
+                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION));
                 }
                 break;
         }
