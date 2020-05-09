@@ -33,7 +33,7 @@ public class Economy {
                 commoditiesPrices.put(new Commodity("Minerals"), 200);
                 commoditiesPrices.put(new Commodity("Manufactures"), 500);
                 commoditiesPrices.put(new Commodity("Hi-techs"), 500);
-                commoditiesPrices.put(new Commodity("Artifacts"), 2000);
+                commoditiesPrices.put(new Commodity("Artifacts"), -2000);
                 break;
             case UNINHABITED:
                 break;
@@ -42,7 +42,7 @@ public class Economy {
                 commoditiesPrices.put(new Commodity("Minerals"), 200);
                 commoditiesPrices.put(new Commodity("Manufactures"), 500);
                 commoditiesPrices.put(new Commodity("Hi-techs"), 1000);
-                commoditiesPrices.put(new Commodity("Artifacts"), 2000);
+                commoditiesPrices.put(new Commodity("Artifacts"), -2000);
         }
     }
 
