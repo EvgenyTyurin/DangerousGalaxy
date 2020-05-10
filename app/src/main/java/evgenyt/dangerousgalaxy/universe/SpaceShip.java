@@ -29,6 +29,14 @@ public class SpaceShip {
         return true;
     }
 
+    public boolean moveFromCargo(Commodity commodity, int quantity) {
+        Integer commodityTonnage = cargoList.get(commodity);
+        if (commodityTonnage < quantity)
+            return false;
+        cargoList.put(commodity, commodityTonnage - quantity);
+        return true;
+    }
+
     public SpaceShip(Star currentStar) {
         this.currentStar = currentStar;
     }

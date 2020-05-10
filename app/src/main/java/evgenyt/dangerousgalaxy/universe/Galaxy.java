@@ -8,6 +8,7 @@ public class Galaxy {
     private static Galaxy galaxy;
     private List<Star> stars = new ArrayList<>(STARS_NUM);
     private SpaceShip playerShip;
+    private Player player = new Player();
 
     // Sol and closest stars
     private static Star SOL = new Star(new SpaceMath.Point(8000l, 0l), "SOL", Star.StarClass.G);
@@ -71,5 +72,9 @@ public class Galaxy {
 
     public SpaceShip getPlayerShip() {
         return playerShip;
+    }
+
+    public Player getPlayer() {
+        return player;
     }
 }

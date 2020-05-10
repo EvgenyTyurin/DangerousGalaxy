@@ -23,6 +23,7 @@ import evgenyt.dangerousgalaxy.R;
 import evgenyt.dangerousgalaxy.universe.Commodity;
 import evgenyt.dangerousgalaxy.universe.Economy;
 import evgenyt.dangerousgalaxy.universe.Galaxy;
+import evgenyt.dangerousgalaxy.universe.Player;
 import evgenyt.dangerousgalaxy.universe.SpaceShip;
 
 public class MarketActivity extends AppCompatActivity {
@@ -30,6 +31,7 @@ public class MarketActivity extends AppCompatActivity {
     private Galaxy galaxy = Galaxy.getInstance();
     private SpaceShip playerShip = galaxy.getPlayerShip();
     private Economy economy = playerShip.getCurrentPlanet().getPlanetEconomy();
+    private Player player = galaxy.getPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +42,7 @@ public class MarketActivity extends AppCompatActivity {
         for (Commodity commodity : prices.keySet()) {
             int price = prices.get(commodity);
             if (price > 0)
-            marketList.add(commodity.toString() + "-" + price + "cr");
+            marketList.add(commodity.toString() + "~" + price + "cr/t");
         }
         final ListAdapter listAdapter = new ArrayAdapter<>(this,
                 R.layout.list_item, marketList);
@@ -49,19 +51,24 @@ public class MarketActivity extends AppCompatActivity {
         marketListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String[] strs = String.valueOf(listAdapter.getItem(position)).split("-");
+                String[] strs = String.valueOf(listAdapter.getItem(position)).split("~");
                 final Commodity commodity = new Commodity(strs[0]);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MarketActivity.this);
                 TextView textCargo = new TextView(MarketActivity.this);
-                builder.setTitle("All cargo: " + playerShip.getCurrentCargoTonnage() + "/" +
-                        playerShip.getMaxCargoTonnage());
+                builder.setTitle("All cargo: " + playerShip.getCurrentCargoTonnage() + "t/" +
+                        playerShip.getMaxCargoTonnage() + "t. Balance: " + player.getBalance() + "cr.");
                 builder.setMessage(commodity.toString() + " (in cargo: " +
-                        playerShip.getCargoList().get(commodity) + ")");
+                        playerShip.getCargoList().get(commodity) + "t)");
                 final EditText editQuantity = new EditText(MarketActivity.this);
                 builder.setView(editQuantity);
                 builder.setPositiveButton("Sell", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        int tonnage = Integer.valueOf(editQuantity.getText().toString());
+                        int price = tonnage * economy.getCommoditiesPrices().get(commodity);
+                        if (playerShip.moveFromCargo(commodity, tonnage)) {
+                            player.credBalance(price);
+                        }
                     }
                 });
                 builder.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
@@ -73,10 +80,9 @@ public class MarketActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int tonnage = Integer.valueOf(editQuantity.getText().toString());
-                        if (playerShip.moveToCargo(commodity, tonnage)) {
-                            Toast.makeText(MarketActivity.this, "Bought", Toast.LENGTH_LONG);
-                        } else {
-                            Toast.makeText(MarketActivity.this, "Nein!", Toast.LENGTH_LONG);
+                        int price = tonnage * economy.getCommoditiesPrices().get(commodity);
+                        if (price <= player.getBalance() && playerShip.moveToCargo(commodity, tonnage)) {
+                            player.debBalance(price);
                         }
                     }
                 });
