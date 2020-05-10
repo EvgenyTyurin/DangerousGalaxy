@@ -41,7 +41,6 @@ public class MarketActivity extends AppCompatActivity {
         Map<Commodity, Integer> prices = economy.getCommoditiesPrices();
         for (Commodity commodity : prices.keySet()) {
             int price = prices.get(commodity);
-            if (price > 0)
             marketList.add(commodity.toString() + "~" + price + "cr/t");
         }
         final ListAdapter listAdapter = new ArrayAdapter<>(this,

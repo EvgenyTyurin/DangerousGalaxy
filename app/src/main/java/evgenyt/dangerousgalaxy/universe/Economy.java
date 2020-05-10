@@ -7,6 +7,7 @@ public class Economy {
     public enum EconomyType {UNINHABITED, AGRICULTURE, EXTRACTION, INDUSTRIAL, POSTINDUSTRIAL}
     private EconomyType economyType;
     private Map<Commodity,Integer> commoditiesPrices = new HashMap<>();
+    private Map<Commodity,Integer> commoditiesStock = new HashMap<>();
 
     public Economy(EconomyType economyType) {
         this.economyType = economyType;
@@ -33,16 +34,17 @@ public class Economy {
                 commoditiesPrices.put(new Commodity("Minerals"), 200);
                 commoditiesPrices.put(new Commodity("Manufactures"), 500);
                 commoditiesPrices.put(new Commodity("Hi-techs"), 500);
-                commoditiesPrices.put(new Commodity("Artifacts"), -2000);
+                commoditiesPrices.put(new Commodity("Artifacts"), 2000);
                 break;
             case UNINHABITED:
+                commoditiesStock.put(new Commodity("Artifacts"), 1);
                 break;
             default:
                 commoditiesPrices.put(new Commodity("Foods"), 100);
                 commoditiesPrices.put(new Commodity("Minerals"), 200);
                 commoditiesPrices.put(new Commodity("Manufactures"), 500);
                 commoditiesPrices.put(new Commodity("Hi-techs"), 1000);
-                commoditiesPrices.put(new Commodity("Artifacts"), -2000);
+                commoditiesPrices.put(new Commodity("Artifacts"), 2000);
         }
     }
 

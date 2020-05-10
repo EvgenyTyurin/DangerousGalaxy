@@ -10,7 +10,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import evgenyt.dangerousgalaxy.R;
+import evgenyt.dangerousgalaxy.universe.Economy;
 import evgenyt.dangerousgalaxy.universe.Galaxy;
+import evgenyt.dangerousgalaxy.universe.Planet;
 import evgenyt.dangerousgalaxy.universe.SpaceShip;
 import evgenyt.dangerousgalaxy.universe.Star;
 
@@ -48,9 +50,18 @@ public class SystemActivity extends AppCompatActivity {
                 systemView.invalidate();
                 return true;
             case R.id.menu_system_land:
-                if (playerShip.getCurrentStar() == systemStar && playerShip.getCurrentPlanet() != null) {
-                    Intent intent = new Intent(this, SpacePortActivity.class);
-                    startActivity(intent);
+                if (playerShip.getCurrentStar() == systemStar &&
+                        playerShip.getCurrentPlanet() != null &&
+                        playerShip.getCurrentPlanet().getPlanetType() != Planet.PlanetType.GAS_GIANT)
+                {
+                    if (playerShip.getCurrentPlanet().getPlanetEconomy().getEconomyType() !=
+                            Economy.EconomyType.UNINHABITED) {
+                        Intent intent = new Intent(this, SpacePortActivity.class);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(this, UninhabitedActivity.class);
+                        startActivity(intent);
+                    }
                 }
                 return true;
             default: return super.onOptionsItemSelected(item);
