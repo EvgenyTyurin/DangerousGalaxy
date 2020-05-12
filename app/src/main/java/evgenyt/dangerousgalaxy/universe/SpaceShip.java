@@ -5,11 +5,30 @@ import java.util.Map;
 
 public class SpaceShip {
 
+    enum Type {DOLPHIN(10, 10, 10);
+
+        final int maxCargo;
+        final int attack;
+        final int speed;
+
+        Type(int maxCargo, int attack, int speed) {
+            this.maxCargo = maxCargo;
+            this.attack = attack;
+            this.speed = speed;
+        }
+
+    }
+
     private Star currentStar;
     private Planet currentPlanet;
     private Map<Commodity, Integer> cargoList = new HashMap<>();
-    private int maxCargoTonnage = 10;
+    private Type type;
 
+    public SpaceShip(Star currentStar, Planet currentPlanet, Type type) {
+        this.currentStar = currentStar;
+        this.currentPlanet = currentPlanet;
+        this.type = type;
+    }
 
     public int getCurrentCargoTonnage() {
         int tonnage = 0;
@@ -20,7 +39,7 @@ public class SpaceShip {
 
     public boolean moveToCargo(Commodity commodity, int quantity) {
         int tonnage = getCurrentCargoTonnage();
-        if (getCurrentCargoTonnage() + quantity > maxCargoTonnage)
+        if (getCurrentCargoTonnage() + quantity > type.maxCargo)
             return false;
         Integer commodityTonnage = cargoList.get(commodity);
         if (commodityTonnage == null)
@@ -35,10 +54,6 @@ public class SpaceShip {
             return false;
         cargoList.put(commodity, commodityTonnage - quantity);
         return true;
-    }
-
-    public SpaceShip(Star currentStar) {
-        this.currentStar = currentStar;
     }
 
     public Star getCurrentStar() {
@@ -58,7 +73,7 @@ public class SpaceShip {
     }
 
     public int getMaxCargoTonnage() {
-        return maxCargoTonnage;
+        return type.maxCargo;
     }
 
     public Map<Commodity, Integer> getCargoList() {

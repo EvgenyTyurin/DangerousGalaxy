@@ -52,7 +52,7 @@ public class Galaxy {
         stars.add(ROSS_248);
         stars.add(EPSILON_ERIDANI);
         stars.add(LACAILLE_9352);
-        playerShip = new SpaceShip(SOL);
+        playerShip = new SpaceShip(SOL, EARTH, SpaceShip.Type.DOLPHIN);
         // Random stars generation
         for (int i = stars.size(); i < STARS_NUM; i++) {
             stars.add(new Star(SpaceMath.getRandomPoint(i)));

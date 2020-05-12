@@ -37,7 +37,8 @@ public class Economy {
                 commoditiesPrices.put(new Commodity("Artifacts"), 2000);
                 break;
             case UNINHABITED:
-                commoditiesStock.put(new Commodity("Artifacts"), 1);
+                if (SpaceMath.getNextRandom() < 0.1)
+                    commoditiesStock.put(new Commodity("Artifacts"), 1);
                 break;
             default:
                 commoditiesPrices.put(new Commodity("Foods"), 100);
@@ -61,4 +62,7 @@ public class Economy {
         return economyType.toString();
     }
 
+    public Map<Commodity, Integer> getCommoditiesStock() {
+        return commoditiesStock;
+    }
 }
