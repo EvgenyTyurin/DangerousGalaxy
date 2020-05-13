@@ -5,11 +5,11 @@ import java.util.Map;
 
 public class SpaceShip {
 
-    enum Type {DOLPHIN(10, 10, 10);
+    public enum Type {DOLPHIN(10, 10, 10);
 
-        final int maxCargo;
-        final int attack;
-        final int speed;
+        public final int maxCargo;
+        public final int attack;
+        public final int speed;
 
         Type(int maxCargo, int attack, int speed) {
             this.maxCargo = maxCargo;
@@ -78,5 +78,9 @@ public class SpaceShip {
 
     public Map<Commodity, Integer> getCargoList() {
         return cargoList;
+    }
+
+    public Type getType() {
+        return type;
     }
 }

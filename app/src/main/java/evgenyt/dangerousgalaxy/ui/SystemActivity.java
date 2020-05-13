@@ -45,6 +45,8 @@ public class SystemActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_system_travel:
                 if (systemView.getTargetPlanet() != null) {
+                    Intent intent = new Intent(this, BattleActivity.class);
+                    startActivity(intent);
                     playerShip.setCurrentPlanet(systemView.getTargetPlanet());
                 }
                 systemView.invalidate();

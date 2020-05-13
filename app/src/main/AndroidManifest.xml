@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.BattleActivity"></activity>
         <activity android:name=".ui.GalaxyActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,7 +20,7 @@
         <activity android:name=".ui.SystemActivity" />
         <activity android:name=".ui.SpacePortActivity" />
         <activity android:name=".ui.MarketActivity" />
-        <activity android:name=".ui.UninhabitedActivity"/>
+        <activity android:name=".ui.UninhabitedActivity" />
     </application>
 
 </manifest>

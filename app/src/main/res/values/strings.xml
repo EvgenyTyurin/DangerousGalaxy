@@ -3,6 +3,10 @@
     <string name="txt_market">market</string>
     <string name="txt_missions">missions</string>
     <string name="txt_search">Search</string>
+    <string name="txt_submit">Submit</string>
+    <string name="txt_fight">Fight</string>
+    <string name="txt_escape">Escape</string>
+    <string name="txt_break">Break through</string>
     <array name="market">
         <item>Wheat;100</item>
         <item>Gold;100000</item>
