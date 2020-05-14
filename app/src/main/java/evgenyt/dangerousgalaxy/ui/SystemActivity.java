@@ -18,7 +18,7 @@ import evgenyt.dangerousgalaxy.universe.Star;
 
 public class SystemActivity extends AppCompatActivity {
 
-    private SystemView systemView;
+    static SystemView systemView;
     SpaceShip playerShip = Galaxy.getInstance().getPlayerShip();
     Star systemStar = GalaxyView.getTargetStar();
 
@@ -45,9 +45,13 @@ public class SystemActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_system_travel:
                 if (systemView.getTargetPlanet() != null) {
-                    Intent intent = new Intent(this, BattleActivity.class);
-                    startActivity(intent);
-                    playerShip.setCurrentPlanet(systemView.getTargetPlanet());
+                    boolean intercepted = true; // TODO: Enemy ship generation
+                    if (intercepted) {
+                        Intent intent = new Intent(this, BattleActivity.class);
+                        startActivity(intent);
+                    } else  {
+                        playerShip.setCurrentPlanet(systemView.getTargetPlanet());
+                    }
                 }
                 systemView.invalidate();
                 return true;

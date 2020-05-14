@@ -144,6 +144,7 @@ public class SpaceMath {
         return planet;
     }
 
+    // Generate random planet economy depending of planet type
     static void generateEconomy(Planet planet) {
         double rand2 = SpaceMath.getNextRandom();
         switch (planet.getPlanetType()) {
