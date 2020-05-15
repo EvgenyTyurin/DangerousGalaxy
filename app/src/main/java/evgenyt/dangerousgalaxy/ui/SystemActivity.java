@@ -9,6 +9,8 @@ import android.view.MenuItem;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import evgenyt.dangerousgalaxy.R;
 import evgenyt.dangerousgalaxy.universe.Economy;
 import evgenyt.dangerousgalaxy.universe.Galaxy;
@@ -28,7 +30,6 @@ public class SystemActivity extends AppCompatActivity {
         systemView = new SystemView(this);
         setContentView(systemView);
         setTitle(systemStar.getName());
-        playerShip.setCurrentPlanet(null);
     }
 
     /** Add menu to window */
@@ -45,7 +46,8 @@ public class SystemActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_system_travel:
                 if (systemView.getTargetPlanet() != null) {
-                    boolean intercepted = true; // TODO: Enemy ship generation
+                    float random = ThreadLocalRandom.current().nextFloat();
+                    boolean intercepted = random < playerShip.getCurrentStar().getSecurity().pirateChance;
                     if (intercepted) {
                         Intent intent = new Intent(this, BattleActivity.class);
                         startActivity(intent);

@@ -4,7 +4,6 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +21,7 @@ import evgenyt.dangerousgalaxy.R;
 import evgenyt.dangerousgalaxy.universe.Commodity;
 import evgenyt.dangerousgalaxy.universe.Economy;
 import evgenyt.dangerousgalaxy.universe.Galaxy;
-import evgenyt.dangerousgalaxy.universe.Player;
+import evgenyt.dangerousgalaxy.universe.PlayerInfo;
 import evgenyt.dangerousgalaxy.universe.SpaceShip;
 
 public class MarketActivity extends AppCompatActivity {
@@ -31,7 +29,7 @@ public class MarketActivity extends AppCompatActivity {
     private Galaxy galaxy = Galaxy.getInstance();
     private SpaceShip playerShip = galaxy.getPlayerShip();
     private Economy economy = playerShip.getCurrentPlanet().getPlanetEconomy();
-    private Player player = galaxy.getPlayer();
+    private PlayerInfo player = galaxy.getPlayer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -151,8 +151,9 @@ public class GalaxyView extends View  implements View.OnTouchListener {
                                 event.getY());
                         if (distance <= ratio) {
                             targetStar = star;
-                            debugStr = "Target star: " + star.getName() +
+                            debugStr = "Star: " + star.getName() +
                                     ", class: " + star.getStarClass() +
+                                    ", security: " + star.getSecurity() +
                                     ", distance " + (int) SpaceMath.distanceLY(playerShip.getCurrentStar().getCoords().getX(),
                                     star.getCoords().getX(), playerShip.getCurrentStar().getCoords().getY(),
                                     star.getCoords().getY()) + " l.y.";

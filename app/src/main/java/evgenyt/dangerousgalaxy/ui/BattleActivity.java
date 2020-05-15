@@ -19,7 +19,8 @@ public class BattleActivity extends AppCompatActivity {
 
     enum BattleResult{ESCAPED, BRAKED_THROUGH, ROBBED, DESTROYED, WINNER, UNKNOWN};
 
-    private SpaceShip playerShip = Galaxy.getInstance().getPlayerShip();
+    private Galaxy galaxy = Galaxy.getInstance();
+    private SpaceShip playerShip = galaxy.getPlayerShip();
     public static BattleResult battleResult = BattleResult.UNKNOWN;
 
     @Override
@@ -86,15 +87,25 @@ public class BattleActivity extends AppCompatActivity {
                 if (getStruggleResult(playerShip.getType().attack, enemyShip.getType().attack)) {
                     playerShip.setCurrentPlanet(SystemActivity.systemView.getTargetPlanet());
                     battleResult = BattleResult.WINNER;
+                    txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
                 }
                 else {
                     battleResult = BattleResult.DESTROYED;
+                    playerShip.setCurrentStar(Galaxy.SOL);
+                    playerShip.setCurrentPlanet(Galaxy.EARTH);
+                    txtResult.setText("Encounter result: Your ship is DESTROYED! New ship provided at Earth");
                 }
-                txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
             }
         });
     }
-    
+
+
+    @Override
+    public void onBackPressed() {
+        if (battleResult != BattleResult.UNKNOWN)
+            super.onBackPressed();
+    }
+
     boolean getStruggleResult(int playerK, int enemyK) {
         float success = (float) playerK / (enemyK + playerK);
         return success > new Random().nextFloat();

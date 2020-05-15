@@ -28,7 +28,7 @@ public class UninhabitedActivity extends AppCompatActivity {
         final TextView statusText = findViewById(R.id.textSearchStatus);
         Button searchButton = findViewById(R.id.buttonSearch);
         final String slotName = "Planets." + currentPlanet.getName() + ".discovered";
-        if (PrefsWork.readSlot(slotName, this).equals("")) {
+        if (PrefsWork.readSlot(slotName).equals("")) {
             statusText.setText("PLANET UNDISCOVERED");
             searchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -40,7 +40,7 @@ public class UninhabitedActivity extends AppCompatActivity {
                     } else {
                         statusText.setText("PLANET DISCOVERED: Nothing found...");
                     }
-                    PrefsWork.saveSlot(slotName, "yes", UninhabitedActivity.this);
+                    PrefsWork.saveSlot(slotName, "yes");
                 }
             });
         }

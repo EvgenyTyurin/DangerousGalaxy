@@ -57,18 +57,40 @@ public class Star {
         }
     }
 
+    // Star system security level
+    public enum Security{
+        LOW(0.5f),
+        MEDIUM(0.1f),
+        HIGH(0.01f);
+
+        public float pirateChance; // base chance of pirate attack
+
+        Security(float pirateChance) {
+            this.pirateChance = pirateChance;
+        }
+
+    }
+
     private final SpaceMath.Point coords;
     private String name;
     private StarClass starClass;
     private List<Planet> planets = new ArrayList<>();
     private final static String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private Security security;
 
     public Star (SpaceMath.Point coords, String name, StarClass starClass) {
         this.coords = coords;
         this.name = name;
         this.starClass = starClass;
         generatePlanets();
+        security = getRandomSecurity();
     }
+
+    public Star (SpaceMath.Point coords, String name, StarClass starClass, Security security) {
+        this(coords, name, starClass);
+        this.security = security;
+    }
+
 
     public Star(SpaceMath.Point coords) {
         this.coords = coords;
@@ -82,6 +104,22 @@ public class Star {
         }
         name = generateName();
         generatePlanets();
+        security = getRandomSecurity();
+    }
+
+    Security getRandomSecurity() {
+        Security security;
+        double random = SpaceMath.getNextRandom();
+        if (random < 0.33) {
+            security = Security.LOW;
+        } else {
+            if (random < 0.66) {
+                security = Security.MEDIUM;
+            } else {
+                security = Security.HIGH;
+            }
+        }
+        return security;
     }
 
     void generatePlanets() {
@@ -93,7 +131,7 @@ public class Star {
         }
     }
 
-    // Add some planets to star
+    // Set planet system
     void setPlanets(Planet... planets) {
         this.planets.clear();
         for (Planet planet : planets)
@@ -150,5 +188,9 @@ public class Star {
 
     public void setStarClass(StarClass starClass) {
         this.starClass = starClass;
+    }
+
+    public Security getSecurity() {
+        return security;
     }
 }

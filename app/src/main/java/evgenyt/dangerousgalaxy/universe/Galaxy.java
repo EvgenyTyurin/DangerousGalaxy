@@ -8,10 +8,10 @@ public class Galaxy {
     private static Galaxy galaxy;
     private List<Star> stars = new ArrayList<>(STARS_NUM);
     private SpaceShip playerShip;
-    private Player player = new Player();
+    private PlayerInfo player = new PlayerInfo();
 
     // Sol and closest stars
-    private static Star SOL = new Star(new SpaceMath.Point(8000l, 0l), "SOL", Star.StarClass.G);
+    public static Star SOL = new Star(new SpaceMath.Point(8000l, 0l), "SOL", Star.StarClass.G, Star.Security.HIGH);
     private static Star ALPHA_CENTAURI = new Star(new SpaceMath.Point(8009l, 0l), "ALPHA CENTAURY", Star.StarClass.G);
     private static Star BARNARDS_STAR = new Star(new SpaceMath.Point(8008, 7), "BARNARD'S STAR", Star.StarClass.M);
     private static Star WOLF_359 = new Star(new SpaceMath.Point(7985, -2), "WOLF 359", Star.StarClass.M);
@@ -24,18 +24,18 @@ public class Galaxy {
     private static Star LACAILLE_9352 = new Star(new SpaceMath.Point(7980, 11), "LACAILLE 9352", Star.StarClass.M);
 
     // Solar system planets
-    private static Planet MERCURY = SpaceMath.generatePlanet("Mercury", Planet.PlanetType.BARREN);
-    private static Planet VENUS = SpaceMath.generatePlanet("Venus", Planet.PlanetType.TOXIC);
-    private static Planet EARTH = SpaceMath.generatePlanet("Earth", Planet.PlanetType.EARTH_LIKE);
-    private static Planet MARS = SpaceMath.generatePlanet("Mars", Planet.PlanetType.BARREN);
+    private static Planet MERCURY = SpaceMath.generatePlanet("Mercury", Planet.PlanetType.BARREN, Economy.EconomyType.INDUSTRIAL);
+    private static Planet VENUS = SpaceMath.generatePlanet("Venus", Planet.PlanetType.TOXIC, Economy.EconomyType.EXTRACTION);
+    public static Planet EARTH = SpaceMath.generatePlanet("Earth", Planet.PlanetType.EARTH_LIKE, Economy.EconomyType.POSTINDUSTRIAL);
+    private static Planet MARS = SpaceMath.generatePlanet("Mars", Planet.PlanetType.BARREN, Economy.EconomyType.INDUSTRIAL);
     private static Planet JUPITER = SpaceMath.generatePlanet("Jupiter", Planet.PlanetType.GAS_GIANT);
     private static Planet SATURN = SpaceMath.generatePlanet("Saturn", Planet.PlanetType.GAS_GIANT);
     private static Planet URANUS = SpaceMath.generatePlanet("Uranus", Planet.PlanetType.GAS_GIANT);
     private static Planet NEPTUNE = SpaceMath.generatePlanet("Neptune", Planet.PlanetType.GAS_GIANT);
-    private static Planet PLUTO = SpaceMath.generatePlanet("Pluto", Planet.PlanetType.BARREN);
+    private static Planet PLUTO = SpaceMath.generatePlanet("Pluto", Planet.PlanetType.BARREN, Economy.EconomyType.UNINHABITED);
 
     // Fantasy planets
-    private static Planet GAIA = SpaceMath.generatePlanet("Gaia", Planet.PlanetType.EARTH_LIKE);
+    private static Planet GAIA = SpaceMath.generatePlanet("Gaia", Planet.PlanetType.EARTH_LIKE, Economy.EconomyType.AGRICULTURE);
 
     private Galaxy(){
         // Real star systems generation
@@ -74,7 +74,9 @@ public class Galaxy {
         return playerShip;
     }
 
-    public Player getPlayer() {
+    public PlayerInfo getPlayer() {
         return player;
     }
+
+
 }

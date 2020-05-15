@@ -11,13 +11,18 @@ import android.content.SharedPreferences;
 public class PrefsWork {
 
     public static final String PREFS_NAME = "prefs";
+    private static Activity contextActivity;
+
+    public static void init(Activity activity) {
+        contextActivity = activity;
+    }
 
     /**
      * Save gear in slot
      */
-    public static void saveSlot(String slot, String gear, Activity activity) {
+    public static void saveSlot(String slot, String gear) {
         if (gear != null) {
-            SharedPreferences sharedPref = activity.getSharedPreferences(PREFS_NAME,
+            SharedPreferences sharedPref = contextActivity.getSharedPreferences(PREFS_NAME,
                     Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString(slot, gear);
@@ -28,8 +33,8 @@ public class PrefsWork {
     /**
      * Read gear in slot
      */
-    public static String readSlot(String slot, Activity activity) {
-        SharedPreferences sharedPref = activity.getSharedPreferences(PREFS_NAME,
+    public static String readSlot(String slot) {
+        SharedPreferences sharedPref = contextActivity.getSharedPreferences(PREFS_NAME,
                 Context.MODE_PRIVATE);
         return sharedPref.getString(slot, "");
     }

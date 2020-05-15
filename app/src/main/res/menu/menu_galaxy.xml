@@ -17,5 +17,13 @@
         android:visible="true"
         app:showAsAction="always"
     />
-    
+
+    <item
+        android:id="@+id/menu_galaxy_stat"
+        android:enabled="true"
+        android:title="Status"
+        android:visible="true"
+        app:showAsAction="always"
+     />
+
 </menu>

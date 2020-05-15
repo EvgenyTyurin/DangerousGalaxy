@@ -144,6 +144,14 @@ public class SpaceMath {
         return planet;
     }
 
+    // Generate planet near star with specific economy
+    static Planet generatePlanet(String name, Planet.PlanetType planetType, Economy.EconomyType economyType) {
+        Planet planet = generatePlanet(name, planetType);
+        planet.setPlanetEconomy(new Economy(economyType));
+        return planet;
+    }
+
+
     // Generate random planet economy depending of planet type
     static void generateEconomy(Planet planet) {
         double rand2 = SpaceMath.getNextRandom();
