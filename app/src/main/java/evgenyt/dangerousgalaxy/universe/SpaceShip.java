@@ -3,6 +3,8 @@ package evgenyt.dangerousgalaxy.universe;
 import java.util.HashMap;
 import java.util.Map;
 
+import evgenyt.dangerousgalaxy.ui.PrefsWork;
+
 public class SpaceShip {
 
     public enum Type {DOLPHIN(10, 10, 10);
@@ -19,15 +21,18 @@ public class SpaceShip {
 
     }
 
-    private Star currentStar;
-    private Planet currentPlanet;
-    private Map<Commodity, Integer> cargoList = new HashMap<>();
-    private Type type;
+    Star currentStar;
+    Planet currentPlanet;
+    Map<Commodity, Integer> cargoList = new HashMap<>();
+    Type type;
 
     public SpaceShip(Star currentStar, Planet currentPlanet, Type type) {
         this.currentStar = currentStar;
         this.currentPlanet = currentPlanet;
         this.type = type;
+    }
+
+    public SpaceShip() {
     }
 
     public int getCurrentCargoTonnage() {
@@ -83,4 +88,9 @@ public class SpaceShip {
     public Type getType() {
         return type;
     }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
 }

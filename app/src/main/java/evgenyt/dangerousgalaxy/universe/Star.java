@@ -131,6 +131,13 @@ public class Star {
         }
     }
 
+    public Planet getPlanet(String name) {
+        for (Planet planet : planets)
+            if (planet.getName().equals(name))
+                return planet;
+        return null;
+    }
+
     // Set planet system
     void setPlanets(Planet... planets) {
         this.planets.clear();

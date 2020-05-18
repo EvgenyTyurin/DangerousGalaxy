@@ -3,6 +3,8 @@ package evgenyt.dangerousgalaxy.universe;
 import java.util.ArrayList;
 import java.util.List;
 
+import evgenyt.dangerousgalaxy.ui.PrefsWork;
+
 public class Galaxy {
     private static final int STARS_NUM = 100000;
     private static Galaxy galaxy;
@@ -52,7 +54,6 @@ public class Galaxy {
         stars.add(ROSS_248);
         stars.add(EPSILON_ERIDANI);
         stars.add(LACAILLE_9352);
-        playerShip = new SpaceShip(SOL, EARTH, SpaceShip.Type.DOLPHIN);
         // Random stars generation
         for (int i = stars.size(); i < STARS_NUM; i++) {
             stars.add(new Star(SpaceMath.getRandomPoint(i)));
@@ -66,11 +67,20 @@ public class Galaxy {
         return galaxy;
     }
 
+    public Star getStar(String name) {
+        for (Star star : stars)
+            if (star.getName().equals(name))
+                return star;
+        return null;
+    }
+
     public List<Star> getStars() {
         return stars;
     }
 
     public SpaceShip getPlayerShip() {
+        if (playerShip == null)
+            playerShip = new PlayerShip();
         return playerShip;
     }
 
