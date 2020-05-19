@@ -33,7 +33,7 @@ public class UninhabitedActivity extends AppCompatActivity {
             searchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Commodity commodity = new Commodity("Artifacts");
+                    Commodity commodity = Economy.ARTIFACTS;
                     if (economy.getCommoditiesStock().get(commodity) != null) {
                         playerShip.moveToCargo(commodity, 1);
                         statusText.setText("PLANET DISCOVERED: Artifact found!");

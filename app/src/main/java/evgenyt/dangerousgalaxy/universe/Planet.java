@@ -24,12 +24,10 @@ public class Planet {
         }
     }
 
-    // public enum PlanetEconomy {UNINHABITED, AGRICULTURE, EXTRACTION, INDUSTRIAL, POSTINDUSTRIAL }
-
     private String name;
     private PlanetType planetType;
     private boolean water;
-    private Economy planetEconomy = new Economy(Economy.EconomyType.UNINHABITED);
+    private Economy planetEconomy = new Economy(Economy.EconomyType.UNINHABITED, this);
 
     public Planet() {
     }

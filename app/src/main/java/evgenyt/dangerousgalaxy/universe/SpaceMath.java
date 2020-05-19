@@ -147,7 +147,7 @@ public class SpaceMath {
     // Generate planet near star with specific economy
     static Planet generatePlanet(String name, Planet.PlanetType planetType, Economy.EconomyType economyType) {
         Planet planet = generatePlanet(name, planetType);
-        planet.setPlanetEconomy(new Economy(economyType));
+        planet.setPlanetEconomy(new Economy(economyType, planet));
         return planet;
     }
 
@@ -158,19 +158,19 @@ public class SpaceMath {
         switch (planet.getPlanetType()) {
             case EARTH_LIKE:
                 if (rand2 < 0.05) {
-                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED));
+                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED, planet));
                 }
                 else {
                     if (rand2 < 0.4) {
-                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.AGRICULTURE));
+                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.AGRICULTURE, planet));
                     } else {
                         if (rand2 < 0.5) {
-                            planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION));
+                            planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION, planet));
                         } else {
                             if (rand2 < 0.7) {
-                                planet.setPlanetEconomy(new Economy(Economy.EconomyType.INDUSTRIAL));
+                                planet.setPlanetEconomy(new Economy(Economy.EconomyType.INDUSTRIAL, planet));
                             } else {
-                                planet.setPlanetEconomy(new Economy(Economy.EconomyType.POSTINDUSTRIAL));
+                                planet.setPlanetEconomy(new Economy(Economy.EconomyType.POSTINDUSTRIAL, planet));
                             }
                         }
                     }
@@ -178,38 +178,38 @@ public class SpaceMath {
                 break;
             case BARREN:
                 if (rand2 < 0.4) {
-                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED));
+                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED, planet));
                 }
                 else {
                     if (rand2 < 0.8) {
-                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION));
+                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION, planet));
                     } else {
                         if (rand2 < 0.98) {
-                            planet.setPlanetEconomy(new Economy(Economy.EconomyType.INDUSTRIAL));
+                            planet.setPlanetEconomy(new Economy(Economy.EconomyType.INDUSTRIAL, planet));
                         } else {
-                            planet.setPlanetEconomy(new Economy(Economy.EconomyType.POSTINDUSTRIAL));
+                            planet.setPlanetEconomy(new Economy(Economy.EconomyType.POSTINDUSTRIAL, planet));
                         }
                     }
                 }
                 break;
             case ICY:
                 if (rand2 < 0.6) {
-                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED));
+                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED, planet));
                 }
                 else {
                     if (rand2 < 0.9) {
-                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION));
+                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION, planet));
                     } else {
-                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.INDUSTRIAL));
+                        planet.setPlanetEconomy(new Economy(Economy.EconomyType.INDUSTRIAL, planet));
                     }
                 }
                 break;
             case TOXIC:
                 if (rand2 < 0.8) {
-                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED));
+                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED, planet));
                 }
                 else {
-                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION));
+                    planet.setPlanetEconomy(new Economy(Economy.EconomyType.EXTRACTION, planet));
                 }
                 break;
         }

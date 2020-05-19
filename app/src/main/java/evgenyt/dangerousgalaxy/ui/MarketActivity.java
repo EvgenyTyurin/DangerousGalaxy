@@ -31,17 +31,16 @@ public class MarketActivity extends AppCompatActivity {
     private Economy economy = playerShip.getCurrentPlanet().getPlanetEconomy();
     private PlayerInfo player = galaxy.getPlayer();
 
+    final List<String> marketList = new ArrayList<>();
+    Map<Commodity, Integer> prices = economy.getCommoditiesPrices();
+    ListAdapter listAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market);
-        final List<String> marketList = new ArrayList<>();
-        Map<Commodity, Integer> prices = economy.getCommoditiesPrices();
-        for (Commodity commodity : prices.keySet()) {
-            int price = prices.get(commodity);
-            marketList.add(commodity.toString() + "~" + price + "cr/t");
-        }
-        final ListAdapter listAdapter = new ArrayAdapter<>(this,
+        initMarketList();
+        listAdapter = new ArrayAdapter<>(this,
                 R.layout.list_item, marketList);
         final ListView marketListView = findViewById(R.id.listview_market);
         marketListView.setAdapter(listAdapter);
@@ -49,7 +48,7 @@ public class MarketActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String[] strs = String.valueOf(listAdapter.getItem(position)).split("~");
-                final Commodity commodity = new Commodity(strs[0]);
+                final Commodity commodity = new Commodity(Commodity.CommodityType.valueOf(strs[0]));
                 AlertDialog.Builder builder = new AlertDialog.Builder(MarketActivity.this);
                 TextView textCargo = new TextView(MarketActivity.this);
                 builder.setTitle("All cargo: " + playerShip.getCurrentCargoTonnage() + "t/" +
@@ -78,8 +77,11 @@ public class MarketActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         int tonnage = Integer.valueOf(editQuantity.getText().toString());
                         int price = tonnage * economy.getCommoditiesPrices().get(commodity);
-                        if (price <= player.getBalance() && playerShip.moveToCargo(commodity, tonnage)) {
+                        int stock = economy.getCommoditiesStock().get(commodity);
+                        if (price <= player.getBalance() && stock >= tonnage && playerShip.moveToCargo(commodity, tonnage)) {
                             player.debBalance(price);
+                            economy.debStock(commodity, tonnage);
+                            initMarketList();
                         }
                     }
                 });
@@ -89,4 +91,18 @@ public class MarketActivity extends AppCompatActivity {
         });
 
     }
+
+    private void initMarketList() {
+        listAdapter = new ArrayAdapter<>(this,
+                R.layout.list_item, marketList);
+        marketList.clear();
+        prices = economy.getCommoditiesPrices();
+        for (Commodity commodity : prices.keySet()) {
+            int price = prices.get(commodity);
+            marketList.add(commodity.toString() + "~" +
+                    price + "cr/t~" +
+                    "Stock:" + economy.getCommoditiesStock().get(commodity));
+        }
+    }
+
 }

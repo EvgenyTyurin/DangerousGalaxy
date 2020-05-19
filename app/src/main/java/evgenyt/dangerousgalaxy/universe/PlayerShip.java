@@ -7,6 +7,7 @@ public class PlayerShip extends SpaceShip {
     private static final String PREF_CURRENT_STAR = "PlayerShip.CurrentStar";
     private static final String PREF_CURRENT_PLANET = "PlayerShip.CurrentPlanet";
     private static final String PREF_TYPE = "PlayerShip.Type";
+    private static final String PREF_CARGO = "PlayerShip.CargoList";
 
     Galaxy galaxy = Galaxy.getInstance();
 
@@ -33,7 +34,40 @@ public class PlayerShip extends SpaceShip {
             else
                 currentPlanet = currentStar.getPlanet(planetStr);
             type = Type.valueOf(typeStr);
+            String cargoStr = PrefsWork.readSlot(PREF_CARGO);
+            if (!cargoStr.equals("")) {
+                String[] cargoSlots = cargoStr.split(",");
+                for (String cargoSlot : cargoSlots) {
+                    String[] cargoInfo = cargoSlot.split(":");
+                    cargoList.put(new Commodity(Commodity.CommodityType.valueOf(cargoInfo[0])), Integer.valueOf(cargoInfo[1]));
+                }
+            }
         }
+    }
+
+    // Save cargo to prefs
+    private void saveCargo() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Commodity commodity : cargoList.keySet())
+            stringBuilder.append(commodity + ":" + cargoList.get(commodity) + ",");
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        PrefsWork.saveSlot(PREF_CARGO, stringBuilder.toString());
+    }
+
+    @Override
+    public boolean moveToCargo(Commodity commodity, int quantity) {
+        boolean result = super.moveToCargo(commodity, quantity);
+        if (result)
+            saveCargo();
+        return result;
+    }
+
+    @Override
+    public boolean moveFromCargo(Commodity commodity, int quantity) {
+        boolean result = super.moveFromCargo(commodity, quantity);
+        if (result)
+            saveCargo();
+        return result;
     }
 
     @Override
