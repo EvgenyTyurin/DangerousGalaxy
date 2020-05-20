@@ -61,7 +61,8 @@ public class Star {
     public enum Security{
         LOW(0.5f),
         MEDIUM(0.1f),
-        HIGH(0.01f);
+        HIGH(0.01f),
+        NO_PIRACY(0f);
 
         public float pirateChance; // base chance of pirate attack
 
@@ -83,7 +84,17 @@ public class Star {
         this.name = name;
         this.starClass = starClass;
         generatePlanets();
-        security = getRandomSecurity();
+        boolean isPopulated = false;
+        for (Planet planet : planets) {
+            if (planet.getPlanetEconomy().getEconomyType() != Economy.EconomyType.UNINHABITED) {
+                isPopulated = true;
+                break;
+            }
+        }
+        if (isPopulated)
+            security = getRandomSecurity();
+        else
+            security = Security.NO_PIRACY;
     }
 
     public Star (SpaceMath.Point coords, String name, StarClass starClass, Security security) {
@@ -104,7 +115,17 @@ public class Star {
         }
         name = generateName();
         generatePlanets();
-        security = getRandomSecurity();
+        boolean isPopulated = false;
+        for (Planet planet : planets) {
+            if (planet.getPlanetEconomy().getEconomyType() != Economy.EconomyType.UNINHABITED) {
+                isPopulated = true;
+                break;
+            }
+        }
+        if (isPopulated)
+            security = getRandomSecurity();
+        else
+            security = Security.NO_PIRACY;
     }
 
     Security getRandomSecurity() {

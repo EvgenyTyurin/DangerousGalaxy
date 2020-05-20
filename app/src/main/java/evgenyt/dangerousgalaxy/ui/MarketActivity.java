@@ -64,6 +64,8 @@ public class MarketActivity extends AppCompatActivity {
                         int price = tonnage * economy.getCommoditiesPrices().get(commodity);
                         if (playerShip.moveFromCargo(commodity, tonnage)) {
                             player.credBalance(price);
+                            economy.credStock(commodity, tonnage);
+                            initMarketList();
                         }
                     }
                 });

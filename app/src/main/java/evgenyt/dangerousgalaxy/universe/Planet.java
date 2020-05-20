@@ -28,11 +28,13 @@ public class Planet {
     private PlanetType planetType;
     private boolean water;
     private Economy planetEconomy = new Economy(Economy.EconomyType.UNINHABITED, this);
+    private Star star;
 
     public Planet() {
     }
 
     public Planet(String name , Star star, int orbit) {
+        this.star = star;
         this.name = name;
         double rand = SpaceMath.getNextRandom();
         if (rand <= 0.333) {
@@ -95,5 +97,9 @@ public class Planet {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public Star getStar() {
+        return star;
     }
 }

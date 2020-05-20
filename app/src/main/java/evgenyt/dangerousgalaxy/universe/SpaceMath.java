@@ -155,9 +155,19 @@ public class SpaceMath {
     // Generate random planet economy depending of planet type
     static void generateEconomy(Planet planet) {
         double rand2 = SpaceMath.getNextRandom();
+        double k = 1;
+        Star star = planet.getStar();
+        if (star != null) {
+            float solDistance = distanceLY(Galaxy.SOL.getCoords().getX(), star.getCoords().getX(),
+                    Galaxy.SOL.getCoords().getY(), star.getCoords().getY());
+            if (solDistance < 100)
+                k = 1;
+            else
+                k = solDistance / 100;
+        }
         switch (planet.getPlanetType()) {
             case EARTH_LIKE:
-                if (rand2 < 0.05) {
+                if (rand2 < 0.05 * k) {
                     planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED, planet));
                 }
                 else {
@@ -177,7 +187,7 @@ public class SpaceMath {
                 }
                 break;
             case BARREN:
-                if (rand2 < 0.4) {
+                if (rand2 < 0.4 * k) {
                     planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED, planet));
                 }
                 else {
@@ -193,7 +203,7 @@ public class SpaceMath {
                 }
                 break;
             case ICY:
-                if (rand2 < 0.6) {
+                if (rand2 < 0.6 * k) {
                     planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED, planet));
                 }
                 else {
@@ -205,7 +215,7 @@ public class SpaceMath {
                 }
                 break;
             case TOXIC:
-                if (rand2 < 0.8) {
+                if (rand2 < 0.8 * k) {
                     planet.setPlanetEconomy(new Economy(Economy.EconomyType.UNINHABITED, planet));
                 }
                 else {

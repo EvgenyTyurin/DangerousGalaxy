@@ -25,28 +25,28 @@ public class Economy {
         this.economyType = economyType;
         switch (economyType) {
             case AGRICULTURE:
-                setMarketPosition(FOODS, 50, 10);
+                setMarketPosition(FOODS, 90, 10);
                 setMarketPosition(MANUFACTURES, 500, 10);
                 setMarketPosition(HI_TECHS, 1000, 10);
                 break;
             case EXTRACTION:
                 setMarketPosition(FOODS, 100, 10);
-                setMarketPosition(MINERALS, 150, 10);
+                setMarketPosition(MINERALS, 180, 10);
                 setMarketPosition(MANUFACTURES, 500, 10);
                 setMarketPosition(HI_TECHS, 1000, 10);
                 break;
             case INDUSTRIAL:
                 setMarketPosition(FOODS, 100, 10);
-                setMarketPosition(MINERALS, 300, 10);
-                setMarketPosition(MANUFACTURES, 300, 10);
-                setMarketPosition(HI_TECHS, 1000, 10);
+                setMarketPosition(MINERALS, 210, 10);
+                setMarketPosition(MANUFACTURES, 450, 10);
+                setMarketPosition(HI_TECHS, 1100, 10);
                 break;
             case POSTINDUSTRIAL:
                 setMarketPosition(FOODS, 100, 10);
                 setMarketPosition(MINERALS, 200, 10);
                 setMarketPosition(MANUFACTURES, 500, 10);
-                setMarketPosition(HI_TECHS, 500, 10);
-                setMarketPosition(ARTIFACTS, 2000, 10);
+                setMarketPosition(HI_TECHS, 900, 10);
+                setMarketPosition(ARTIFACTS, 1000, 10);
                 break;
             case UNINHABITED:
                 if (SpaceMath.getNextRandom() < 0.1)
@@ -57,7 +57,7 @@ public class Economy {
                 commoditiesPrices.put(MINERALS, 200);
                 commoditiesPrices.put(MANUFACTURES, 500);
                 commoditiesPrices.put(HI_TECHS, 1000);
-                commoditiesPrices.put(ARTIFACTS, 2000);
+                commoditiesPrices.put(ARTIFACTS, 1000);
 
         }
     }
@@ -72,6 +72,13 @@ public class Economy {
         isPrefsLoaded = true;
     }
 
+    public void credStock(Commodity commodity, int tonnage) {
+        int stock = commoditiesStock.get(commodity);
+        stock += tonnage;
+        commoditiesStock.put(commodity, stock);
+        PrefsWork.saveSlot(PREFS_STOCK + planet + "." + commodity, String.valueOf(stock));
+    }
+
     public void debStock(Commodity commodity, int tonnage) {
         int stock = commoditiesStock.get(commodity);
         if (stock < tonnage)
@@ -82,7 +89,7 @@ public class Economy {
     }
 
     private void setMarketPosition(Commodity commodity, int price, int stock) {
-        commoditiesPrices.put(commodity, stock);
+        commoditiesPrices.put(commodity, price);
         commoditiesStock.put(commodity, stock);
     }
 

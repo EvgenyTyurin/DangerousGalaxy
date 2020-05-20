@@ -32,7 +32,9 @@ public class StatusActivity extends AppCompatActivity {
         TextView cargoText = findViewById(R.id.text_cargo);
         StringBuilder stringBuilder = new StringBuilder();
         for (Commodity commodity : playerShip.getCargoList().keySet()) {
-            stringBuilder.append(commodity.toString() + " - " + playerShip.getCargoList().get(commodity) + "t. ");
+            int tonnage = playerShip.getCargoList().get(commodity);
+            if (tonnage > 0)
+                stringBuilder.append(commodity.toString() + " - " + tonnage + "t. ");
         }
         cargoText.setText("Cargo: " + stringBuilder.toString());
         TextView navText = findViewById(R.id.text_nav);
