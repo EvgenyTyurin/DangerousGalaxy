@@ -9,7 +9,7 @@ public class PlayerInfo {
     public PlayerInfo() {
         String balanceStr = PrefsWork.readSlot(PREFS_PLAYER_BALANCE);
         if (balanceStr.equals("")) {
-            balance = 1000;
+            setBalance(1000);
         } else {
             balance = Integer.valueOf(balanceStr);
         }
@@ -18,17 +18,20 @@ public class PlayerInfo {
     public boolean debBalance(int debit) {
         if (debit > balance)
             return false;
-        balance -= debit;
-        PrefsWork.saveSlot(PREFS_PLAYER_BALANCE, String.valueOf(balance));
+        setBalance(balance - debit);
         return true;
     }
 
     public void credBalance(int sum) {
-        balance += sum;
-        PrefsWork.saveSlot(PREFS_PLAYER_BALANCE, String.valueOf(balance));
+        setBalance(balance + sum);
     }
 
     public int getBalance() {
         return balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
+        PrefsWork.saveSlot(PREFS_PLAYER_BALANCE, String.valueOf(balance));
     }
 }

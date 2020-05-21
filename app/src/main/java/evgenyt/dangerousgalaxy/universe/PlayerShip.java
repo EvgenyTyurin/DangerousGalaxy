@@ -8,6 +8,7 @@ public class PlayerShip extends SpaceShip {
     private static final String PREF_CURRENT_PLANET = "PlayerShip.CurrentPlanet";
     private static final String PREF_TYPE = "PlayerShip.Type";
     private static final String PREF_CARGO = "PlayerShip.CargoList";
+    private static final String PREF_FUEL = "PlayerShip.Fuel";
 
     Galaxy galaxy = Galaxy.getInstance();
 
@@ -23,10 +24,12 @@ public class PlayerShip extends SpaceShip {
         String starStr = PrefsWork.readSlot(PREF_CURRENT_STAR);
         String planetStr = PrefsWork.readSlot(PREF_CURRENT_PLANET);
         String typeStr = PrefsWork.readSlot(PREF_TYPE);
+        String fuelStr = PrefsWork.readSlot(PREF_FUEL);
         if (starStr.equals("")) {
             setCurrentStar(Galaxy.SOL);
             setCurrentPlanet(Galaxy.EARTH);
             setType(Type.DOLPHIN);
+            setFuel(type.maxFuel);
         } else {
             currentStar = galaxy.getStar(starStr);
             if (currentStar == null)
@@ -34,6 +37,10 @@ public class PlayerShip extends SpaceShip {
             else
                 currentPlanet = currentStar.getPlanet(planetStr);
             type = Type.valueOf(typeStr);
+            if (fuelStr.equals(""))
+                fuel = type.maxFuel;
+            else
+                fuel = Integer.valueOf(fuelStr);
             String cargoStr = PrefsWork.readSlot(PREF_CARGO);
             if (!cargoStr.equals("")) {
                 String[] cargoSlots = cargoStr.split(",");
@@ -89,5 +96,11 @@ public class PlayerShip extends SpaceShip {
     public void setType(Type type) {
         super.setType(type);
         PrefsWork.saveSlot(PREF_TYPE, type.toString());
+    }
+
+    @Override
+    public void setFuel(int fuel) {
+        super.setFuel(fuel);
+        PrefsWork.saveSlot(PREF_FUEL, String.valueOf(fuel));
     }
 }

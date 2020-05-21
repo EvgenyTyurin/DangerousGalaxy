@@ -3,20 +3,30 @@ package evgenyt.dangerousgalaxy.universe;
 import java.util.HashMap;
 import java.util.Map;
 
-import evgenyt.dangerousgalaxy.ui.PrefsWork;
-
 public class SpaceShip {
 
-    public enum Type {DOLPHIN(10, 10, 10);
+    public enum Type {
+        // DEFAULT
+        DOLPHIN(10, 10, 10, 10, 10000),
+        // CLASS I
+        WANDERER(12, 12, 12, 12, 15000),
+        TRUMP(15, 10, 10, 10, 15000),
+        EAGLE(10, 15, 10, 10, 15000),
+        BLAZE(10, 10, 15, 10, 15000),
+        JOURNEY(10, 10, 10, 15, 15000);
 
         public final int maxCargo;
         public final int attack;
         public final int speed;
+        public final int maxFuel;
+        public final int price;
 
-        Type(int maxCargo, int attack, int speed) {
+        Type(int maxCargo, int attack, int speed, int maxFuel, int price) {
             this.maxCargo = maxCargo;
             this.attack = attack;
             this.speed = speed;
+            this.maxFuel = maxFuel;
+            this.price = price;
         }
 
     }
@@ -25,11 +35,13 @@ public class SpaceShip {
     Planet currentPlanet;
     Map<Commodity, Integer> cargoList = new HashMap<>();
     Type type;
+    int fuel;
 
     public SpaceShip(Star currentStar, Planet currentPlanet, Type type) {
         this.currentStar = currentStar;
         this.currentPlanet = currentPlanet;
         this.type = type;
+        fuel = type.maxFuel;
     }
 
     public SpaceShip() {
@@ -91,6 +103,22 @@ public class SpaceShip {
 
     public void setType(Type type) {
         this.type = type;
+    }
+
+    public int getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(int fuel) {
+        this.fuel = fuel;
+    }
+
+    public boolean debFuel(int burn) {
+        if (burn <= fuel) {
+            setFuel(fuel - burn);
+            return true;
+        }
+        return false;
     }
 
 }

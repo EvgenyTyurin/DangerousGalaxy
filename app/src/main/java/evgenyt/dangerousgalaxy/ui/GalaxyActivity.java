@@ -2,10 +2,7 @@ package evgenyt.dangerousgalaxy.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,7 +10,9 @@ import android.view.MenuItem;
 
 import evgenyt.dangerousgalaxy.R;
 import evgenyt.dangerousgalaxy.universe.Galaxy;
+import evgenyt.dangerousgalaxy.universe.SpaceMath;
 import evgenyt.dangerousgalaxy.universe.SpaceShip;
+import evgenyt.dangerousgalaxy.universe.Star;
 
 public class GalaxyActivity extends AppCompatActivity {
 
@@ -42,9 +41,14 @@ public class GalaxyActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_galaxy_travel:
-                playerShip.setCurrentStar(galaxyView.getTargetStar());
-                playerShip.setCurrentPlanet(null);
-                galaxyView.invalidate();
+                Star currentStar = playerShip.getCurrentStar();
+                Star targetStar = galaxyView.getTargetStar();
+                int distance = (int) SpaceMath.distanceLY(currentStar, targetStar);
+                if (playerShip.debFuel(distance)) {
+                    playerShip.setCurrentStar(targetStar);
+                    playerShip.setCurrentPlanet(null);
+                    galaxyView.invalidate();
+                }
                 return true;
             case R.id.menu_galaxy_system:
                 Intent intent = new Intent(this, SystemActivity.class);

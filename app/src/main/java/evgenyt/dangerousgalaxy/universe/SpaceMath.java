@@ -62,6 +62,11 @@ public class SpaceMath {
         return (float)sqrt(x * x + y * y);
     }
 
+    public static float distanceLY(Star star1, Star star2) {
+        return distanceLY(star1.getCoords().getX(), star2.getCoords().getX(),
+                star1.getCoords().getY(), star2.getCoords().getY());
+    }
+
     public static float distanceLY(float x0, float x1, float y0, float y1) {
         return distance(x0, x1, 0, y1) / 2;
     }

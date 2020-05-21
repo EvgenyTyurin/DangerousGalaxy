@@ -23,12 +23,20 @@
         app:layout_constraintTop_toBottomOf="@+id/textBalance" />
 
     <TextView
-        android:id="@+id/text_cargo"
+        android:id="@+id/text_fuel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_ship" />
+
+    <TextView
+        android:id="@+id/text_cargo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_fuel" />
 
     <TextView
         android:id="@+id/text_nav"
@@ -37,5 +45,14 @@
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_cargo" />
+
+    <Button
+        android:id="@+id/button_destruct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_self_destruct"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

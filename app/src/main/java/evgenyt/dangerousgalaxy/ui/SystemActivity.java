@@ -46,13 +46,16 @@ public class SystemActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.menu_system_travel:
                 if (systemView.getTargetPlanet() != null) {
-                    float random = ThreadLocalRandom.current().nextFloat();
-                    boolean intercepted = random < playerShip.getCurrentStar().getSecurity().pirateChance;
-                    if (intercepted) {
-                        Intent intent = new Intent(this, BattleActivity.class);
-                        startActivity(intent);
-                    } else  {
-                        playerShip.setCurrentPlanet(systemView.getTargetPlanet());
+                    int burn = (playerShip.getCurrentPlanet() == null) ? 0 : 1;
+                    if (playerShip.debFuel(burn)) {
+                        float random = ThreadLocalRandom.current().nextFloat();
+                        boolean intercepted = random < playerShip.getCurrentStar().getSecurity().pirateChance;
+                        if (intercepted) {
+                            Intent intent = new Intent(this, BattleActivity.class);
+                            startActivity(intent);
+                        } else {
+                            playerShip.setCurrentPlanet(systemView.getTargetPlanet());
+                        }
                     }
                 }
                 systemView.invalidate();

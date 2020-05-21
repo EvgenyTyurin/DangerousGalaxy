@@ -12,6 +12,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import evgenyt.dangerousgalaxy.R;
 import evgenyt.dangerousgalaxy.universe.Galaxy;
+import evgenyt.dangerousgalaxy.universe.PlayerInfo;
 import evgenyt.dangerousgalaxy.universe.SpaceMath;
 import evgenyt.dangerousgalaxy.universe.SpaceShip;
 
@@ -21,13 +22,16 @@ public class BattleActivity extends AppCompatActivity {
 
     private Galaxy galaxy = Galaxy.getInstance();
     private SpaceShip playerShip = galaxy.getPlayerShip();
+    private final PlayerInfo playerInfo = galaxy.getPlayer();
     public static BattleResult battleResult = BattleResult.UNKNOWN;
+    TextView txtResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_battle);
         // Prepare battle info
+        txtResult = findViewById(R.id.textResult);
         TextView txtPlayerShip = findViewById(R.id.textPlayerShip);
         SpaceShip.Type myType = playerShip.getType();
         txtPlayerShip.setText("You ship: " + myType +
@@ -40,7 +44,6 @@ public class BattleActivity extends AppCompatActivity {
                 ", speed: " + myType.speed);
         TextView txtDemand = findViewById(R.id.textDemand);
         txtDemand.setText("Enemy demands: Drop all cargo or DIE!");
-        final TextView txtResult = findViewById(R.id.textResult);
         txtResult.setText("Encounter result: UNKNOWN");
         // Battle actions
         Button escapeButton = findViewById(R.id.buttonEscape);
@@ -49,11 +52,11 @@ public class BattleActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (getStruggleResult(playerShip.getType().speed * 2, enemyShip.getType().speed)) {
                     battleResult = BattleResult.ESCAPED;
+                    txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
                 }
                 else {
-                    battleResult = BattleResult.DESTROYED;
+                    shipDestroyed();
                 }
-                txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
             }
         });
         Button breakButton = findViewById(R.id.buttonBreak);
@@ -63,11 +66,11 @@ public class BattleActivity extends AppCompatActivity {
                 if (getStruggleResult(playerShip.getType().speed, enemyShip.getType().speed)) {
                     battleResult = BattleResult.BRAKED_THROUGH;
                     playerShip.setCurrentPlanet(SystemActivity.systemView.getTargetPlanet());
+                    txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
                 }
                 else {
-                    battleResult = BattleResult.DESTROYED;
+                    shipDestroyed();
                 }
-                txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
             }
         });
         Button submitButton = findViewById(R.id.buttonSubmit);
@@ -90,15 +93,25 @@ public class BattleActivity extends AppCompatActivity {
                     txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
                 }
                 else {
-                    battleResult = BattleResult.DESTROYED;
-                    playerShip.setCurrentStar(Galaxy.SOL);
-                    playerShip.setCurrentPlanet(Galaxy.EARTH);
-                    txtResult.setText("Encounter result: Your ship is DESTROYED! New ship provided at Earth");
+                    shipDestroyed();
                 }
             }
         });
     }
 
+    private void shipDestroyed() {
+        if (playerShip.getType() != SpaceShip.Type.DOLPHIN &&
+                !playerInfo.debBalance(playerShip.getType().price / 10))
+            playerShip.setType(SpaceShip.Type.DOLPHIN);
+        if (playerShip.getType() == SpaceShip.Type.DOLPHIN && playerInfo.getBalance() < 1000)
+            playerInfo.setBalance(1000);
+        playerShip.getCargoList().clear();
+        playerShip.setCurrentStar(Galaxy.SOL);
+        playerShip.setCurrentPlanet(Galaxy.EARTH);
+        playerShip.setFuel(playerShip.getType().maxFuel);
+        battleResult = BattleResult.DESTROYED;
+        txtResult.setText("Encounter result: Your ship is DESTROYED! New ship provided at Earth");
+    }
 
     @Override
     public void onBackPressed() {
