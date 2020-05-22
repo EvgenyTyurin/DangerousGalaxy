@@ -15,6 +15,8 @@ import evgenyt.dangerousgalaxy.universe.SpaceShip;
 
 public class SpacePortActivity extends AppCompatActivity {
 
+    private static final int FUEL_PRICE = 10;
+
     Galaxy galaxy = Galaxy.getInstance();
     PlayerInfo playerInfo = galaxy.getPlayer();
     SpaceShip playerShip = galaxy.getPlayerShip();
@@ -35,12 +37,21 @@ public class SpacePortActivity extends AppCompatActivity {
         final Button refuelButton = findViewById(R.id.buttonRefuel);
         final int fuel = playerShip.getFuel();
         final int maxFuel = playerShip.getType().maxFuel;
+        refuelButton.setText("REFUEL (" + (maxFuel - fuel) * FUEL_PRICE + "cr.)");
         refuelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (playerInfo.debBalance((maxFuel - fuel) * 10)) {
+                if (playerInfo.debBalance((maxFuel - fuel) * FUEL_PRICE)) {
                     playerShip.setFuel(maxFuel);
                 }
+            }
+        });
+        final Button shipyardButton = findViewById(R.id.buttonShipyard);
+        shipyardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ShipyardActivity.class);
+                startActivity(intent);
             }
         });
     }

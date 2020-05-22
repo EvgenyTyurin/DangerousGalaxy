@@ -68,7 +68,7 @@ public class SpaceMath {
     }
 
     public static float distanceLY(float x0, float x1, float y0, float y1) {
-        return distance(x0, x1, 0, y1) / 2;
+        return distance(x0, x1, y0, y1) / 2;
     }
 
 
