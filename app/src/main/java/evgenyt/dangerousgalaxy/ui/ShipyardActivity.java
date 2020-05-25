@@ -19,6 +19,7 @@ import evgenyt.dangerousgalaxy.universe.SpaceShip;
 
 public class ShipyardActivity extends AppCompatActivity {
 
+    public final static String EXTRA_SHIP_BUY = "evgenyt.dangerousgalaxy.ship_buy";
     final List<String> shipList = new ArrayList<>();
     List<SpaceShip.Type> shipTypes =Arrays.asList(SpaceShip.Type.values());
     ListAdapter listAdapter;
@@ -38,6 +39,7 @@ public class ShipyardActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String[] itemStrs = String.valueOf(listAdapter.getItem(position)).split(":");
                 Intent intent = new Intent(getApplicationContext(), BuyShipActivity.class);
+                intent.putExtra(EXTRA_SHIP_BUY, itemStrs[0]);
                 startActivity(intent);
             }
         });

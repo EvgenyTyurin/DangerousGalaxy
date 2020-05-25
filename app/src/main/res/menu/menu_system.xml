@@ -18,4 +18,12 @@
         app:showAsAction="always"
     />
 
+    <item
+        android:id="@+id/menu_system_fuel_scoop"
+        android:enabled="true"
+        android:title="Fuel Scoop"
+        android:visible="true"
+        app:showAsAction="always"
+    />
+
 </menu>

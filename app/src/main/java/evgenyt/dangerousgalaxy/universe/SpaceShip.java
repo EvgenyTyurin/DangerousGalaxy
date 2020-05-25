@@ -7,13 +7,13 @@ public class SpaceShip {
 
     public enum Type {
         // DEFAULT
-        DOLPHIN(10, 10, 10, 10, 10000),
+        DOLPHIN(10, 10, 10, 20, 10000),
         // CLASS I
-        WANDERER(12, 12, 12, 12, 15000),
-        TRUMP(15, 10, 10, 10, 15000),
-        EAGLE(10, 15, 10, 10, 15000),
-        BLAZE(10, 10, 15, 10, 15000),
-        JOURNEY(10, 10, 10, 15, 15000);
+        WANDERER(12, 12, 12, 25, 15000),
+        TRUMP(15, 10, 10, 20, 15000),
+        EAGLE(10, 15, 10, 20, 15000),
+        BLAZE(10, 10, 15, 20, 15000),
+        JOURNEY(10, 10, 10, 30, 15000);
 
         public final int maxCargo;
         public final int attack;
@@ -45,6 +45,10 @@ public class SpaceShip {
     }
 
     public SpaceShip() {
+    }
+
+    public boolean getDamage(int damage) {
+        return true;
     }
 
     public int getCurrentCargoTonnage() {

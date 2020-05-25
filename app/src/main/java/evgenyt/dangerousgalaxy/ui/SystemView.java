@@ -60,6 +60,11 @@ public class SystemView extends View implements View.OnTouchListener {
                 int y1 = systemStar.getPlanets().indexOf(targetPlanet) * 150 + 300;
                 canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
                 canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
+            } else {
+                int x1 = 100;
+                int y1 = 120;
+                canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
+                canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
             }
             Planet currentPlanet = playerShip.getCurrentPlanet();
             if (currentPlanet != null) {
@@ -75,6 +80,8 @@ public class SystemView extends View implements View.OnTouchListener {
         int planetIdx = (int) (event.getY() - 300) / 150;
         if (planetIdx >= 0 && planetIdx < systemStar.getPlanets().size()) {
             targetPlanet = systemStar.getPlanets().get(planetIdx);
+        } else {
+            targetPlanet = null;
         }
         v.invalidate();
         return false;

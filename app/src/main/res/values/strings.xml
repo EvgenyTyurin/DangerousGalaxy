@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Dangerous Galaxy</string>
-    <string name="txt_market">market</string>
-    <string name="txt_missions">missions</string>
+    <string name="txt_market">Market</string>
+    <string name="txt_missions">Missions</string>
     <string name="txt_search">Search</string>
     <string name="txt_submit">Submit</string>
     <string name="txt_fight">Fight</string>
@@ -10,6 +10,7 @@
     <string name="txt_refuel">Refuel</string>
     <string name="txt_self_destruct">Self destruct</string>
     <string name="txt_shipyard">Shipyard</string>
+    <string name="txt_buy">Buy</string>
     <array name="market">
         <item>Wheat;100</item>
         <item>Gold;100000</item>

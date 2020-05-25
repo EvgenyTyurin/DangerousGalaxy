@@ -45,17 +45,14 @@ public class SystemActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_system_travel:
-                if (systemView.getTargetPlanet() != null) {
-                    int burn = (playerShip.getCurrentPlanet() == null) ? 0 : 1;
-                    if (playerShip.debFuel(burn)) {
-                        float random = ThreadLocalRandom.current().nextFloat();
-                        boolean intercepted = random < playerShip.getCurrentStar().getSecurity().pirateChance;
-                        if (intercepted) {
-                            Intent intent = new Intent(this, BattleActivity.class);
-                            startActivity(intent);
-                        } else {
-                            playerShip.setCurrentPlanet(systemView.getTargetPlanet());
-                        }
+                if (playerShip.debFuel(1)) {
+                    float random = ThreadLocalRandom.current().nextFloat();
+                    boolean intercepted = random < playerShip.getCurrentStar().getSecurity().pirateChance;
+                    if (intercepted) {
+                        Intent intent = new Intent(this, BattleActivity.class);
+                        startActivity(intent);
+                    } else {
+                        playerShip.setCurrentPlanet(systemView.getTargetPlanet());
                     }
                 }
                 systemView.invalidate();
@@ -73,6 +70,11 @@ public class SystemActivity extends AppCompatActivity {
                         Intent intent = new Intent(this, UninhabitedActivity.class);
                         startActivity(intent);
                     }
+                }
+                return true;
+            case R.id.menu_system_fuel_scoop:
+                if (playerShip.getCurrentPlanet() == null && playerShip.getDamage(10)) {
+                    playerShip.setFuel(playerShip.getType().maxFuel);
                 }
                 return true;
             default: return super.onOptionsItemSelected(item);
