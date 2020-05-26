@@ -27,9 +27,10 @@ public class StatusActivity extends AppCompatActivity {
         balanceText.setText("Balance:" + player.getBalance() + "cr.");
         TextView shipText = findViewById(R.id.text_ship);
         shipText.setText("Ship: " + playerShip.getType() +
-                ", attack:" + playerShip.getType().attack +
-                ", speed:" + playerShip.getType().speed +
-                ", cargo:" + playerShip.getCurrentCargoTonnage() + "/" + playerShip.getType().maxCargo + " tons."
+                ", integrity: " + playerShip.getHealth() + "%" +
+                ", laser:" + playerShip.getType().attack + "MW" +
+                ", speed:" + playerShip.getType().speed + "ls/h" +
+                ", cargo:" + playerShip.getCurrentCargoTonnage() + "/" + playerShip.getType().maxCargo + " t."
                 );
         TextView fuelText = findViewById(R.id.text_fuel);
         fuelText.setText("Fuel: " + playerShip.getFuel() + "/" + playerShip.getType().maxFuel);

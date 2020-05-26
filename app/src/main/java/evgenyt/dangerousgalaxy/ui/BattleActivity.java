@@ -25,6 +25,10 @@ public class BattleActivity extends AppCompatActivity {
     private final PlayerInfo playerInfo = galaxy.getPlayer();
     public static BattleResult battleResult = BattleResult.UNKNOWN;
     TextView txtResult;
+    Button escapeButton, breakButton, submitButton, fightButton;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,33 +41,35 @@ public class BattleActivity extends AppCompatActivity {
         txtPlayerShip.setText("You ship: " + myType +
                 ", attack: " + myType.attack +
                 ", speed: " + myType.speed);
-        final SpaceShip enemyShip = new SpaceShip(null, null, SpaceShip.Type.DOLPHIN);
+        SpaceShip.Type enemyType = SpaceShip.Type.values()[new Random().nextInt(SpaceShip.Type.values().length)];
+        final SpaceShip enemyShip = new SpaceShip(null, null, enemyType);
         TextView txtEnemyShip = findViewById(R.id.textEnemyShip);
-        txtEnemyShip.setText("Enemy ship: " + myType +
-                ", attack: " + myType.attack +
-                ", speed: " + myType.speed);
+        txtEnemyShip.setText("Enemy ship: " + enemyType +
+                ", attack: " + enemyType.attack +
+                ", speed: " + enemyType.speed);
         TextView txtDemand = findViewById(R.id.textDemand);
         txtDemand.setText("Enemy demands: Drop all cargo or DIE!");
         txtResult.setText("Encounter result: UNKNOWN");
         // Battle actions
-        Button escapeButton = findViewById(R.id.buttonEscape);
+        escapeButton = findViewById(R.id.buttonEscape);
         escapeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getStruggleResult(playerShip.getType().speed * 2, enemyShip.getType().speed)) {
+                if (getStruggleResult(playerShip.getType().speed * 4, enemyShip.getType().speed)) {
                     battleResult = BattleResult.ESCAPED;
                     txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
                 }
                 else {
                     shipDestroyed();
                 }
+                disableButtons();
             }
         });
-        Button breakButton = findViewById(R.id.buttonBreak);
+        breakButton = findViewById(R.id.buttonBreak);
         breakButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getStruggleResult(playerShip.getType().speed, enemyShip.getType().speed)) {
+                if (getStruggleResult(playerShip.getType().speed * 2, enemyShip.getType().speed)) {
                     battleResult = BattleResult.BRAKED_THROUGH;
                     playerShip.setCurrentPlanet(SystemActivity.systemView.getTargetPlanet());
                     txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
@@ -71,9 +77,10 @@ public class BattleActivity extends AppCompatActivity {
                 else {
                     shipDestroyed();
                 }
+                disableButtons();
             }
         });
-        Button submitButton = findViewById(R.id.buttonSubmit);
+        submitButton = findViewById(R.id.buttonSubmit);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,22 +88,34 @@ public class BattleActivity extends AppCompatActivity {
                 playerShip.getCargoList().clear();
                 txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
                 playerShip.setCurrentPlanet(SystemActivity.systemView.getTargetPlanet());
+                disableButtons();
             }
         });
-        Button fightButton = findViewById(R.id.buttonFight);
+        fightButton = findViewById(R.id.buttonFight);
         fightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (getStruggleResult(playerShip.getType().attack, enemyShip.getType().attack)) {
+                if (getStruggleResult(playerShip.getType().attack * 2, enemyShip.getType().attack)) {
                     playerShip.setCurrentPlanet(SystemActivity.systemView.getTargetPlanet());
                     battleResult = BattleResult.WINNER;
-                    txtResult.setText("Encounter result: Your ship is " + battleResult.toString());
+                    int price = enemyShip.getType().price / 10;
+                    playerInfo.credBalance(price);
+                    txtResult.setText("Encounter result: Your ship is " + battleResult.toString() +
+                            "Awarded " + price +"cr.");
                 }
                 else {
                     shipDestroyed();
                 }
+                disableButtons();
             }
         });
+    }
+
+    private void disableButtons() {
+        escapeButton.setEnabled(false);
+        breakButton.setEnabled(false);
+        submitButton.setEnabled(false);
+        fightButton.setEnabled(false);
     }
 
     private void shipDestroyed() {
@@ -109,6 +128,7 @@ public class BattleActivity extends AppCompatActivity {
         playerShip.setCurrentStar(Galaxy.SOL);
         playerShip.setCurrentPlanet(Galaxy.EARTH);
         playerShip.setFuel(playerShip.getType().maxFuel);
+        playerShip.setHealth(100);
         battleResult = BattleResult.DESTROYED;
         txtResult.setText("Encounter result: Your ship is DESTROYED! New ship provided at Earth");
     }

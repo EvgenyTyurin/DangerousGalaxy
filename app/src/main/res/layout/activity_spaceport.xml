@@ -25,12 +25,21 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonMarket" />
 
     <Button
+        android:id="@+id/buttonRepair"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_repair"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonRefuel" />
+
+    <Button
         android:id="@+id/buttonShipyard"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/txt_shipyard"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonRefuel" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonRepair" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

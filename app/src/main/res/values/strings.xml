@@ -8,6 +8,10 @@
     <string name="txt_escape">Escape</string>
     <string name="txt_break">Break through</string>
     <string name="txt_refuel">Refuel</string>
+    <string name="txt_refueled">Refueled</string>
+    <string name="txt_nomoney">Not enough money</string>
+    <string name="txt_repair">Repair</string>
+    <string name="txt_repaired">Repaired</string>
     <string name="txt_self_destruct">Self destruct</string>
     <string name="txt_shipyard">Shipyard</string>
     <string name="txt_buy">Buy</string>

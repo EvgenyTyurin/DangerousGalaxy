@@ -43,6 +43,25 @@ public class SpacePortActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (playerInfo.debBalance((maxFuel - fuel) * FUEL_PRICE)) {
                     playerShip.setFuel(maxFuel);
+                    refuelButton.setText(R.string.txt_refueled);
+                    refuelButton.setEnabled(false);
+                } else {
+                    refuelButton.setText(R.string.txt_nomoney);
+                }
+            }
+        });
+        final Button repairButton = findViewById(R.id.buttonRepair);
+        final int repairPrice = (int) ((100 - playerShip.getHealth()) * 0.001 * playerShip.getType().price);
+        repairButton.setText("Repair (" + repairPrice + "cr.)");
+        repairButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (playerInfo.debBalance(repairPrice)) {
+                    playerShip.setHealth(100);
+                    repairButton.setEnabled(false);
+                    repairButton.setText(R.string.txt_repaired);
+                } else {
+                    repairButton.setText(R.string.txt_nomoney);
                 }
             }
         });

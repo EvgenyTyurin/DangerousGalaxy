@@ -7,13 +7,19 @@ public class SpaceShip {
 
     public enum Type {
         // DEFAULT
-        DOLPHIN(10, 10, 10, 20, 10000),
+        DOLPHIN(10, 10, 10, 30, 10000),
         // CLASS I
-        WANDERER(12, 12, 12, 25, 15000),
-        TRUMP(15, 10, 10, 20, 15000),
-        EAGLE(10, 15, 10, 20, 15000),
-        BLAZE(10, 10, 15, 20, 15000),
-        JOURNEY(10, 10, 10, 30, 15000);
+        WANDERER(12, 12, 12, 40, 15000),
+        TRUMP(15, 10, 10, 30, 15000),
+        EAGLE(10, 15, 10, 30, 15000),
+        BLAZE(10, 10, 15, 30, 15000),
+        JOURNEY(10, 10, 10, 50, 15000),
+        // CLASS II
+        WANDERER2(17, 17, 17, 60, 20000),
+        TRUMP2(20, 15, 15, 50, 20000),
+        EAGLE2(15, 20, 15, 50, 20000),
+        BLAZE2(15, 15, 20, 50, 20000),
+        JOURNEY2(15, 15, 15, 70, 20000);
 
         public final int maxCargo;
         public final int attack;
@@ -36,6 +42,7 @@ public class SpaceShip {
     Map<Commodity, Integer> cargoList = new HashMap<>();
     Type type;
     int fuel;
+    int health = 100;
 
     public SpaceShip(Star currentStar, Planet currentPlanet, Type type) {
         this.currentStar = currentStar;
@@ -48,7 +55,12 @@ public class SpaceShip {
     }
 
     public boolean getDamage(int damage) {
-        return true;
+        if (health > damage) {
+            setHealth(health - damage);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public int getCurrentCargoTonnage() {
@@ -125,4 +137,11 @@ public class SpaceShip {
         return false;
     }
 
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
 }
