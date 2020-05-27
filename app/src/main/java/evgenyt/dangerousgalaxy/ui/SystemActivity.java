@@ -1,5 +1,6 @@
 package evgenyt.dangerousgalaxy.ui;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,6 +21,7 @@ import evgenyt.dangerousgalaxy.universe.Star;
 
 public class SystemActivity extends AppCompatActivity {
 
+    public static GalaxyActivity galaxyActivity;
     static SystemView systemView;
     SpaceShip playerShip = Galaxy.getInstance().getPlayerShip();
     Star systemStar = GalaxyView.getTargetStar();
@@ -56,6 +58,7 @@ public class SystemActivity extends AppCompatActivity {
                     }
                 }
                 systemView.invalidate();
+                galaxyActivity.updateTitle();
                 return true;
             case R.id.menu_system_land:
                 if (playerShip.getCurrentStar() == systemStar &&
@@ -65,6 +68,7 @@ public class SystemActivity extends AppCompatActivity {
                     if (playerShip.getCurrentPlanet().getPlanetEconomy().getEconomyType() !=
                             Economy.EconomyType.UNINHABITED) {
                         Intent intent = new Intent(this, SpacePortActivity.class);
+                        SpacePortActivity.galaxyActivity = galaxyActivity;
                         startActivity(intent);
                     } else {
                         Intent intent = new Intent(this, UninhabitedActivity.class);

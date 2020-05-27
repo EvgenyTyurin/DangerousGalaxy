@@ -20,6 +20,7 @@ public class SpacePortActivity extends AppCompatActivity {
     Galaxy galaxy = Galaxy.getInstance();
     PlayerInfo playerInfo = galaxy.getPlayer();
     SpaceShip playerShip = galaxy.getPlayerShip();
+    public static GalaxyActivity galaxyActivity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class SpacePortActivity extends AppCompatActivity {
                     playerShip.setFuel(maxFuel);
                     refuelButton.setText(R.string.txt_refueled);
                     refuelButton.setEnabled(false);
+                    galaxyActivity.updateTitle();
                 } else {
                     refuelButton.setText(R.string.txt_nomoney);
                 }

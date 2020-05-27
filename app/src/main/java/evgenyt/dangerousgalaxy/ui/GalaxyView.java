@@ -149,7 +149,7 @@ public class GalaxyView extends View  implements View.OnTouchListener {
                                 event.getX(),
                                 getScrY(star.getCoords().getY()),
                                 event.getY());
-                        if (distance <= ratio) {
+                        if (distance <= ratio * 2.5) {
                             targetStar = star;
                             debugStr = star.getName() + "(" + star.getStarClass() + ")" +
                                     ", security: " + star.getSecurity() +

@@ -26,6 +26,11 @@ public class GalaxyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         galaxyView = new GalaxyView(this);
         setContentView(galaxyView);
+        updateTitle();
+    }
+
+    public void updateTitle() {
+        setTitle("Fuel: " + playerShip.getFuel() + " t.");
     }
 
     /** Add menu to window */
@@ -48,10 +53,12 @@ public class GalaxyActivity extends AppCompatActivity {
                     playerShip.setCurrentStar(targetStar);
                     playerShip.setCurrentPlanet(null);
                     galaxyView.invalidate();
+                    updateTitle();
                 }
                 return true;
             case R.id.menu_galaxy_system:
                 Intent intent = new Intent(this, SystemActivity.class);
+                SystemActivity.galaxyActivity = this;
                 startActivity(intent);
                 return true;
             case R.id.menu_galaxy_stat:
