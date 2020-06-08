@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,7 +32,11 @@ public class SystemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         systemView = new SystemView(this);
         setContentView(systemView);
-        setTitle(systemStar.getName());
+        updateTitle();
+    }
+
+    public void updateTitle() {
+        setTitle("Fuel:" + playerShip.getFuel() + "t.");
     }
 
     /** Add menu to window */
@@ -56,15 +61,23 @@ public class SystemActivity extends AppCompatActivity {
                     } else {
                         playerShip.setCurrentPlanet(systemView.getTargetPlanet());
                     }
+                } else {
+                    Toast.makeText(this, "No fuel", Toast.LENGTH_SHORT).show();
                 }
                 systemView.invalidate();
                 galaxyActivity.updateTitle();
+                updateTitle();
                 return true;
             case R.id.menu_system_land:
-                if (playerShip.getCurrentStar() == systemStar &&
-                        playerShip.getCurrentPlanet() != null &&
-                        playerShip.getCurrentPlanet().getPlanetType() != Planet.PlanetType.GAS_GIANT)
-                {
+                if (playerShip.getCurrentStar() != systemStar) {
+                    Toast.makeText(this, "You're not at this system!", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                if (playerShip.getCurrentPlanet() == null) {
+                    Toast.makeText(this, "You can't land on star!", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                if (playerShip.getCurrentPlanet().getPlanetType() != Planet.PlanetType.GAS_GIANT) {
                     if (playerShip.getCurrentPlanet().getPlanetEconomy().getEconomyType() !=
                             Economy.EconomyType.UNINHABITED) {
                         Intent intent = new Intent(this, SpacePortActivity.class);
@@ -74,11 +87,22 @@ public class SystemActivity extends AppCompatActivity {
                         Intent intent = new Intent(this, UninhabitedActivity.class);
                         startActivity(intent);
                     }
+                } else {
+                    Toast.makeText(this, "You can't land on gas giant!", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             case R.id.menu_system_fuel_scoop:
-                if (playerShip.getCurrentPlanet() == null && playerShip.getDamage(10)) {
+                if (playerShip.getCurrentPlanet() != null) {
+                    Toast.makeText(this, "You must travel to star to fuel scooping!", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+                if (playerShip.getDamage(10)) {
                     playerShip.setFuel(playerShip.getType().maxFuel);
+                    updateTitle();
+                    Toast.makeText(this, "Fuel scooped, integrity " + playerShip.getHealth() + "%",
+                            Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Ship integrity to low to fuel scoop!", Toast.LENGTH_SHORT).show();
                 }
                 return true;
             default: return super.onOptionsItemSelected(item);

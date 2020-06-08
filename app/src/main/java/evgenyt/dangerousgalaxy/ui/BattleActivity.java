@@ -27,9 +27,6 @@ public class BattleActivity extends AppCompatActivity {
     TextView txtResult;
     Button escapeButton, breakButton, submitButton, fightButton;
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,16 +116,7 @@ public class BattleActivity extends AppCompatActivity {
     }
 
     private void shipDestroyed() {
-        if (playerShip.getType() != SpaceShip.Type.DOLPHIN &&
-                !playerInfo.debBalance(playerShip.getType().price / 10))
-            playerShip.setType(SpaceShip.Type.DOLPHIN);
-        if (playerShip.getType() == SpaceShip.Type.DOLPHIN && playerInfo.getBalance() < 1000)
-            playerInfo.setBalance(1000);
-        playerShip.getCargoList().clear();
-        playerShip.setCurrentStar(Galaxy.SOL);
-        playerShip.setCurrentPlanet(Galaxy.EARTH);
-        playerShip.setFuel(playerShip.getType().maxFuel);
-        playerShip.setHealth(100);
+        SpaceMath.shipDestruct();
         battleResult = BattleResult.DESTROYED;
         txtResult.setText("Encounter result: Your ship is DESTROYED! New ship provided at Earth");
     }

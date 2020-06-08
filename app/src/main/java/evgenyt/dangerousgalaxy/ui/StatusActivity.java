@@ -11,6 +11,7 @@ import evgenyt.dangerousgalaxy.R;
 import evgenyt.dangerousgalaxy.universe.Commodity;
 import evgenyt.dangerousgalaxy.universe.Galaxy;
 import evgenyt.dangerousgalaxy.universe.PlayerInfo;
+import evgenyt.dangerousgalaxy.universe.SpaceMath;
 import evgenyt.dangerousgalaxy.universe.SpaceShip;
 import evgenyt.dangerousgalaxy.universe.Star;
 
@@ -49,15 +50,7 @@ public class StatusActivity extends AppCompatActivity {
         destructButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (playerShip.getType() != SpaceShip.Type.DOLPHIN &&
-                        !player.debBalance(playerShip.getType().price / 10))
-                    playerShip.setType(SpaceShip.Type.DOLPHIN);
-                if (playerShip.getType() == SpaceShip.Type.DOLPHIN && player.getBalance() < 1000)
-                    player.setBalance(1000);
-                playerShip.getCargoList().clear();
-                playerShip.setCurrentStar(Galaxy.SOL);
-                playerShip.setCurrentPlanet(Galaxy.EARTH);
-                playerShip.setFuel(playerShip.getType().maxFuel);
+                SpaceMath.shipDestruct();
             }
         });
     }

@@ -56,6 +56,60 @@ public class SpaceMath {
         }
     }
 
+    public static void shipDestruct() {
+        Galaxy galaxy = Galaxy.getInstance();
+        SpaceShip playerShip = galaxy.getPlayerShip();
+        PlayerInfo player = galaxy.getPlayer();
+        if (playerShip.getType() != SpaceShip.Type.DOLPHIN &&
+                !player.debBalance(playerShip.getType().price / 10))
+            playerShip.setType(SpaceShip.Type.DOLPHIN);
+        if (playerShip.getType() == SpaceShip.Type.DOLPHIN && player.getBalance() < 1000) {
+            player.setBalance(1000);
+            SpaceMath.resetEcumen();
+        }
+        playerShip.getCargoList().clear();
+        playerShip.setCurrentStar(Galaxy.SOL);
+        playerShip.setCurrentPlanet(Galaxy.EARTH);
+        playerShip.setFuel(playerShip.getType().maxFuel);
+        playerShip.setHealth(100);
+    }
+
+    public static void resetEcumen() {
+        for (Planet planet : Galaxy.SOL.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+        for (Planet planet : Galaxy.ALPHA_CENTAURI.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+        for (Planet planet : Galaxy.BARNARDS_STAR.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+        for (Planet planet : Galaxy.EPSILON_ERIDANI.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+        for (Planet planet : Galaxy.LACAILLE_9352.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+        for (Planet planet : Galaxy.LALANDE_21185.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+        for (Planet planet : Galaxy.LUYTEN_726_8.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+        for (Planet planet : Galaxy.ROSS_154.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+        for (Planet planet : Galaxy.ROSS_248.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+        for (Planet planet : Galaxy.SIRIUS.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+        for (Planet planet : Galaxy.WOLF_359.getPlanets()) {
+            planet.getPlanetEconomy().resetStocks();
+        }
+    }
+
     public static float distance(float x0, float x1, float y0, float y1) {
         float x = x0 - x1;
         float y = y0 - y1;
@@ -165,10 +219,10 @@ public class SpaceMath {
         if (star != null) {
             float solDistance = distanceLY(Galaxy.SOL.getCoords().getX(), star.getCoords().getX(),
                     Galaxy.SOL.getCoords().getY(), star.getCoords().getY());
-            if (solDistance < 100)
+            if (solDistance < 1000)
                 k = 1;
             else
-                k = solDistance / 100;
+                k = solDistance / 1000;
         }
         switch (planet.getPlanetType()) {
             case EARTH_LIKE:

@@ -8,6 +8,7 @@
         android:title="Travel"
         android:visible="true"
         app:showAsAction="always"
+        android:icon="@drawable/target"
     />
 
     <item
@@ -16,6 +17,7 @@
         android:title="Land"
         android:visible="true"
         app:showAsAction="always"
+        android:icon="@drawable/land"
     />
 
     <item
@@ -24,6 +26,7 @@
         android:title="Fuel Scoop"
         android:visible="true"
         app:showAsAction="always"
+        android:icon="@drawable/scoop"
     />
 
 </menu>

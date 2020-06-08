@@ -23,6 +23,10 @@ public class Economy {
     public Economy(EconomyType economyType, Planet planet) {
         this.planet = planet;
         this.economyType = economyType;
+        initStocks();
+    }
+
+    private void initStocks() {
         switch (economyType) {
             case AGRICULTURE:
                 setMarketPosition(FOODS, 90, 10);
@@ -58,7 +62,13 @@ public class Economy {
                 commoditiesPrices.put(MANUFACTURES, 500);
                 commoditiesPrices.put(HI_TECHS, 1000);
                 commoditiesPrices.put(ARTIFACTS, 1000);
+        }
+    }
 
+    public void resetStocks() {
+        initStocks();
+        for (Commodity commodity : commoditiesStock.keySet()) {
+            PrefsWork.saveSlot(PREFS_STOCK + planet + "." + commodity, "");
         }
     }
 
