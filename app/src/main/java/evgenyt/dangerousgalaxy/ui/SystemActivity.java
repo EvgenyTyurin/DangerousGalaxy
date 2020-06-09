@@ -17,6 +17,7 @@ import evgenyt.dangerousgalaxy.R;
 import evgenyt.dangerousgalaxy.universe.Economy;
 import evgenyt.dangerousgalaxy.universe.Galaxy;
 import evgenyt.dangerousgalaxy.universe.Planet;
+import evgenyt.dangerousgalaxy.universe.SpaceMath;
 import evgenyt.dangerousgalaxy.universe.SpaceShip;
 import evgenyt.dangerousgalaxy.universe.Star;
 
@@ -70,7 +71,17 @@ public class SystemActivity extends AppCompatActivity {
                 return true;
             case R.id.menu_system_land:
                 if (playerShip.getCurrentStar() != systemStar) {
-                    Toast.makeText(this, "You're not at this system!", Toast.LENGTH_SHORT).show();
+                    Star currentStar = playerShip.getCurrentStar();
+                    int distance = (int) SpaceMath.distanceLY(currentStar, systemStar);
+                    if (playerShip.debFuel(distance)) {
+                        playerShip.setCurrentStar(systemStar);
+                        playerShip.setCurrentPlanet(null);
+                        systemView.setTargetPlanet(null);
+                        systemView.invalidate();
+                        updateTitle();
+                    }
+
+                    // Toast.makeText(this, "You're not at this system!", Toast.LENGTH_SHORT).show();
                     return true;
                 }
                 if (playerShip.getCurrentPlanet() == null) {
@@ -104,6 +115,10 @@ public class SystemActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(this, "Ship integrity to low to fuel scoop!", Toast.LENGTH_SHORT).show();
                 }
+                return true;
+            case R.id.menu_system_player:
+                Intent intent = new Intent(this, StatusActivity.class);
+                startActivity(intent);
                 return true;
             default: return super.onOptionsItemSelected(item);
         }

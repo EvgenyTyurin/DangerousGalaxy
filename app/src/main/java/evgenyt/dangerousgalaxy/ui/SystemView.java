@@ -90,4 +90,8 @@ public class SystemView extends View implements View.OnTouchListener {
     public Planet getTargetPlanet() {
         return targetPlanet;
     }
+
+    public void setTargetPlanet(Planet targetPlanet) {
+        this.targetPlanet = targetPlanet;
+    }
 }

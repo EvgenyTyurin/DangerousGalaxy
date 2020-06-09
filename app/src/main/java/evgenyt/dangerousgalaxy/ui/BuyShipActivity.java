@@ -2,11 +2,13 @@ package evgenyt.dangerousgalaxy.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import evgenyt.dangerousgalaxy.R;
 import evgenyt.dangerousgalaxy.universe.Galaxy;
@@ -14,6 +16,8 @@ import evgenyt.dangerousgalaxy.universe.PlayerInfo;
 import evgenyt.dangerousgalaxy.universe.SpaceShip;
 
 public class BuyShipActivity extends AppCompatActivity {
+
+    public static ShipyardActivity shipyardActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,13 +53,17 @@ public class BuyShipActivity extends AppCompatActivity {
             buyButton.setEnabled(false);
         }
         final PlayerInfo playerInfo = galaxy.getPlayer();
+        final Activity context = this;
         buyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (playerInfo.debBalance(delta)) {
                     playerShip.setType(shipBuyType);
                     playerShip.setFuel(Math.min(shipBuyType.maxFuel, playerShip.getFuel()));
+                    shipyardActivity.updateTitle();
                     finish();
+                } else {
+                    Toast.makeText(context, "Not enough credits!", Toast.LENGTH_SHORT).show();
                 }
             }
         });

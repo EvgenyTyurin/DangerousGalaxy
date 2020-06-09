@@ -3,6 +3,8 @@ package evgenyt.dangerousgalaxy.ui;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +42,9 @@ public class MarketActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_market);
+        updateTitle();
         initMarketList();
+        final Context context = this;
         listAdapter = new ArrayAdapter<>(this,
                 R.layout.list_item, marketList);
         final ListView marketListView = findViewById(R.id.listview_market);
@@ -66,6 +71,11 @@ public class MarketActivity extends AppCompatActivity {
                             player.credBalance(price);
                             economy.credStock(commodity, tonnage);
                             initMarketList();
+                            updateTitle();
+                            Toast.makeText(context, "You sold " + tonnage + " tons of " + commodity +
+                                    " for " + price + " credits.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Commodity not in cargo hold!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -84,6 +94,11 @@ public class MarketActivity extends AppCompatActivity {
                             player.debBalance(price);
                             economy.debStock(commodity, tonnage);
                             initMarketList();
+                            updateTitle();
+                            Toast.makeText(context, "You bought " + tonnage + " tons of " +
+                                    commodity + " for " + price, Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(context, "Not enough money or cargo space!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -94,6 +109,11 @@ public class MarketActivity extends AppCompatActivity {
 
     }
 
+    public void updateTitle() {
+        setTitle("Balance: " + player.getBalance() + " cr. " +
+                "Cargo: " + playerShip.getCurrentCargoTonnage() + "/" + playerShip.getType().maxCargo + " t.");
+    }
+
     private void initMarketList() {
         listAdapter = new ArrayAdapter<>(this,
                 R.layout.list_item, marketList);
@@ -101,9 +121,13 @@ public class MarketActivity extends AppCompatActivity {
         prices = economy.getCommoditiesPrices();
         for (Commodity commodity : prices.keySet()) {
             int price = prices.get(commodity);
+            Integer hold = playerShip.getCargoList().get(commodity);
+            String holdStr = "";
+            if (hold != null && hold > 0)
+                holdStr = "~In cargo: " + holdStr;
             marketList.add(commodity.toString() + "~" +
                     price + "cr/t~" +
-                    "Stock:" + economy.getCommoditiesStock().get(commodity));
+                    "Stock:" + economy.getCommoditiesStock().get(commodity) + holdStr);
         }
     }
 

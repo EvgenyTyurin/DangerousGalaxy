@@ -29,4 +29,14 @@
         android:icon="@drawable/scoop"
     />
 
+    <item
+        android:id="@+id/menu_system_player"
+        android:enabled="true"
+        android:title="Player Info"
+        android:visible="true"
+        app:showAsAction="always"
+        android:icon="@drawable/status"
+    />
+
+
 </menu>

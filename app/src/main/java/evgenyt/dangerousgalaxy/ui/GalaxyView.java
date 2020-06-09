@@ -104,9 +104,13 @@ public class GalaxyView extends View  implements View.OnTouchListener {
         int l = r < 10 ? 10 : r;
         // draw destination
         long x1 = getScrX(targetStar.getCoords().getX());
-        long y1 = getScrY(targetStar.getCoords().getY()) - r;
+        long y1 = getScrY(targetStar.getCoords().getY());
+        /*
         canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
         canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
+        */
+        canvas.drawCircle(x1, y1, l, paintTarget);
+
         // draw ship
         long x = getScrX(galaxy.getPlayerShip().getCurrentStar().getCoords().getX());
         long y = getScrY(galaxy.getPlayerShip().getCurrentStar().getCoords().getY()) - r;
