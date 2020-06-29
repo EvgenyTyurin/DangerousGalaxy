@@ -124,7 +124,7 @@ public class MarketActivity extends AppCompatActivity {
             Integer hold = playerShip.getCargoList().get(commodity);
             String holdStr = "";
             if (hold != null && hold > 0)
-                holdStr = "~In cargo: " + holdStr;
+                holdStr = "~In cargo: " + hold + " t.";
             marketList.add(commodity.toString() + "~" +
                     price + "cr/t~" +
                     "Stock:" + economy.getCommoditiesStock().get(commodity) + holdStr);

@@ -62,11 +62,11 @@ public class SystemActivity extends AppCompatActivity {
                         systemView.setTargetPlanet(null);
                         systemView.invalidate();
                         updateTitle();
+                    } else {
+                        Toast.makeText(this, "Not enough fuel!", Toast.LENGTH_SHORT).show();
                     }
-                    // Toast.makeText(this, "You're not at this system!", Toast.LENGTH_SHORT).show();
                     return true;
                 }
-
                 if (playerShip.debFuel(1)) {
                     float random = ThreadLocalRandom.current().nextFloat();
                     boolean intercepted = random < playerShip.getCurrentStar().getSecurity().pirateChance;
@@ -89,6 +89,7 @@ public class SystemActivity extends AppCompatActivity {
                     return true;
                 }
                 if (playerShip.getCurrentPlanet().getPlanetType() != Planet.PlanetType.GAS_GIANT) {
+                    PrefsWork.saveSlot(playerShip.getCurrentPlanet().getName() + ".visited", "1");
                     if (playerShip.getCurrentPlanet().getPlanetEconomy().getEconomyType() !=
                             Economy.EconomyType.UNINHABITED) {
                         Intent intent = new Intent(this, SpacePortActivity.class);
