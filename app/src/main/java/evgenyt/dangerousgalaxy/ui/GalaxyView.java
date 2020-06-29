@@ -58,6 +58,8 @@ public class GalaxyView extends View  implements View.OnTouchListener {
         paintStar.setColor(Color.WHITE);
         paintShip.setColor(Color.CYAN);
         paintTarget.setColor(Color.RED);
+        paintTarget.setStyle(Paint.Style.STROKE);
+        paintTarget.setStrokeWidth(4);
         paintDebug.setColor(Color.WHITE);
         paintDebug.setTextSize(40);
         setOnTouchListener(this);
@@ -109,7 +111,10 @@ public class GalaxyView extends View  implements View.OnTouchListener {
         canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
         canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
         */
+        l += 2;
         canvas.drawCircle(x1, y1, l, paintTarget);
+        canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
+        canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
 
         // draw ship
         long x = getScrX(galaxy.getPlayerShip().getCurrentStar().getCoords().getX());

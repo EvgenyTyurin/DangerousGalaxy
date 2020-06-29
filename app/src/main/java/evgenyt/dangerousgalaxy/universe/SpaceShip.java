@@ -7,19 +7,22 @@ public class SpaceShip {
 
     public enum Type {
         // DEFAULT
-        DOLPHIN(10, 10, 10, 30, 10000),
+        DOLPHIN(10, 10, 10, 3, 10000),
         // CLASS I
-        WANDERER(12, 12, 12, 40, 15000),
-        TRUMP(15, 10, 10, 30, 15000),
-        EAGLE(10, 15, 10, 30, 15000),
-        BLAZE(10, 10, 15, 30, 15000),
-        JOURNEY(10, 10, 10, 50, 15000),
+        WANDERER(12, 12, 12, 4, 15000),
+        TRUMP(15, 10, 10, 3, 15000),
+        EAGLE(10, 15, 10, 3, 15000),
+        BLAZE(10, 10, 15, 3, 15000),
+        JOURNEY(10, 10, 10, 5, 15000),
         // CLASS II
-        WANDERER2(17, 17, 17, 60, 20000),
-        TRUMP2(20, 15, 15, 50, 20000),
-        EAGLE2(15, 20, 15, 50, 20000),
-        BLAZE2(15, 15, 20, 50, 20000),
-        JOURNEY2(15, 15, 15, 70, 20000);
+        WANDERER2(17, 17, 17, 6, 20000),
+        TRUMP2(20, 15, 15, 5, 20000),
+        EAGLE2(15, 20, 15, 5, 20000),
+        BLAZE2(15, 15, 20, 5, 20000),
+        JOURNEY2(15, 15, 15, 7, 20000);
+
+        // Real max fuel of ship ujusted due gameplay and universe size
+        private static final int JUMP_MULTI = 20;
 
         public final int maxCargo;
         public final int attack;
@@ -31,7 +34,7 @@ public class SpaceShip {
             this.maxCargo = maxCargo;
             this.attack = attack;
             this.speed = speed;
-            this.maxFuel = maxFuel;
+            this.maxFuel = maxFuel * JUMP_MULTI;
             this.price = price;
         }
 

@@ -30,6 +30,8 @@ public class SystemView extends View implements View.OnTouchListener {
         paintText.setTextSize(30);
         paintShip.setColor(Color.CYAN);
         paintTarget.setColor(Color.RED);
+        paintTarget.setStyle(Paint.Style.STROKE);
+        paintTarget.setStrokeWidth(4);
         targetPlanet = null;
         setOnTouchListener(this);
     }
@@ -58,13 +60,22 @@ public class SystemView extends View implements View.OnTouchListener {
             if (targetPlanet != null) {
                 int x1 = 100;
                 int y1 = systemStar.getPlanets().indexOf(targetPlanet) * 150 + 300;
-                canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
-                canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
+                // canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
+                // canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
+                l += 2;
+                canvas.drawCircle(x1, y1, l, paintTarget);
+                canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
+                canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
+
             } else {
                 int x1 = 100;
                 int y1 = 120;
-                canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
-                canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
+                // canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
+                // canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
+                l += 2;
+                canvas.drawCircle(x1, y1, l, paintTarget);
+                canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
+                canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
             }
             Planet currentPlanet = playerShip.getCurrentPlanet();
             if (currentPlanet != null) {

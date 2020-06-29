@@ -19,7 +19,7 @@ import evgenyt.dangerousgalaxy.universe.SpaceShip;
 
 public class SpacePortActivity extends AppCompatActivity {
 
-    private static final int FUEL_PRICE = 10;
+    private static final int FUEL_PRICE = 5;
 
     Galaxy galaxy = Galaxy.getInstance();
     PlayerInfo playerInfo = galaxy.getPlayer();

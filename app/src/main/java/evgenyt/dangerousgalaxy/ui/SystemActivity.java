@@ -53,6 +53,20 @@ public class SystemActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_system_travel:
+                if (playerShip.getCurrentStar() != systemStar) {
+                    Star currentStar = playerShip.getCurrentStar();
+                    int distance = (int) SpaceMath.distanceLY(currentStar, systemStar);
+                    if (playerShip.debFuel(distance)) {
+                        playerShip.setCurrentStar(systemStar);
+                        playerShip.setCurrentPlanet(null);
+                        systemView.setTargetPlanet(null);
+                        systemView.invalidate();
+                        updateTitle();
+                    }
+                    // Toast.makeText(this, "You're not at this system!", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+
                 if (playerShip.debFuel(1)) {
                     float random = ThreadLocalRandom.current().nextFloat();
                     boolean intercepted = random < playerShip.getCurrentStar().getSecurity().pirateChance;
@@ -70,20 +84,6 @@ public class SystemActivity extends AppCompatActivity {
                 updateTitle();
                 return true;
             case R.id.menu_system_land:
-                if (playerShip.getCurrentStar() != systemStar) {
-                    Star currentStar = playerShip.getCurrentStar();
-                    int distance = (int) SpaceMath.distanceLY(currentStar, systemStar);
-                    if (playerShip.debFuel(distance)) {
-                        playerShip.setCurrentStar(systemStar);
-                        playerShip.setCurrentPlanet(null);
-                        systemView.setTargetPlanet(null);
-                        systemView.invalidate();
-                        updateTitle();
-                    }
-
-                    // Toast.makeText(this, "You're not at this system!", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
                 if (playerShip.getCurrentPlanet() == null) {
                     Toast.makeText(this, "You can't land on star!", Toast.LENGTH_SHORT).show();
                     return true;
