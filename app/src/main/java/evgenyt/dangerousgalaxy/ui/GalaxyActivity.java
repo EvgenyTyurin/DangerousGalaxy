@@ -3,6 +3,8 @@ package evgenyt.dangerousgalaxy.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,8 +21,11 @@ public class GalaxyActivity extends AppCompatActivity {
     private GalaxyView galaxyView;
     private SpaceShip playerShip;
 
+    public static Bitmap shipBitmap;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        shipBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ship);
         PrefsWork.init(this);
         playerShip = Galaxy.getInstance().getPlayerShip();
         super.onCreate(savedInstanceState);

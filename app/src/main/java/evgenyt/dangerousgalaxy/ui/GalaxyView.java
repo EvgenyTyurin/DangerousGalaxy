@@ -16,6 +16,8 @@ import evgenyt.dangerousgalaxy.universe.SpaceShip;
 import evgenyt.dangerousgalaxy.universe.Star;
 import evgenyt.dangerousgalaxy.universe.SpaceMath;
 
+import static evgenyt.dangerousgalaxy.ui.GalaxyActivity.shipBitmap;
+
 /**
  * Galaxy map
  */
@@ -119,8 +121,10 @@ public class GalaxyView extends View  implements View.OnTouchListener {
         // draw ship
         long x = getScrX(galaxy.getPlayerShip().getCurrentStar().getCoords().getX());
         long y = getScrY(galaxy.getPlayerShip().getCurrentStar().getCoords().getY()) - r;
-        canvas.drawLine(x, y, x - l, y - l * 2, paintShip);
-        canvas.drawLine(x, y, x + l, y - l * 2, paintShip);
+        // canvas.drawLine(x, y, x - l, y - l * 2, paintShip);
+        // canvas.drawLine(x, y, x + l, y - l * 2, paintShip);
+        canvas.drawBitmap(shipBitmap, x - l * 2, y - l * 2, paintShip);
+
         // draw path
         canvas.drawLine(x, y, x1, y1, paintStar);
         // debug text
