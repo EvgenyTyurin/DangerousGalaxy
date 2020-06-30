@@ -19,7 +19,19 @@ public class SpaceShip {
         TRUMP2(20, 15, 15, 5, 20000),
         EAGLE2(15, 20, 15, 5, 20000),
         BLAZE2(15, 15, 20, 5, 20000),
-        JOURNEY2(15, 15, 15, 7, 20000);
+        JOURNEY2(15, 15, 15, 7, 20000),
+        // CLASS III
+        WANDERER3(20, 20, 20, 8, 30000),
+        TRUMP3(22, 17, 17, 7, 30000),
+        EAGLE3(17, 22, 17, 7, 30000),
+        BLAZE3(17, 17, 22, 7, 30000),
+        JOURNEY3(17, 17, 17, 9, 30000),
+        // CLASS IV
+        WANDERER4(22, 22, 22, 10, 50000),
+        TRUMP4(25, 20, 20, 9, 50000),
+        EAGLE4(20, 25, 20, 9, 50000),
+        BLAZE4(20, 20, 25, 9, 50000),
+        JOURNEY4(20, 20, 20, 11, 50000);
 
         // Real max fuel of ship ujusted due gameplay and universe size
         private static final int JUMP_MULTI = 20;
