@@ -56,6 +56,11 @@ public class GalaxyView extends View  implements View.OnTouchListener {
     private String debugStr = "";
     private boolean moved = true;
 
+    // Animation vars
+    private boolean isAnimating = false;
+    private int shipX, shipY, targetX, targetY;
+    private float deltaX, deltaY;
+
     private void init() {
         paintStar.setColor(Color.WHITE);
         paintShip.setColor(Color.CYAN);
@@ -106,27 +111,34 @@ public class GalaxyView extends View  implements View.OnTouchListener {
             }
         }
         int l = r < 10 ? 10 : r;
-        // draw destination
         long x1 = getScrX(targetStar.getCoords().getX());
         long y1 = getScrY(targetStar.getCoords().getY());
-        /*
-        canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
-        canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
-        */
-        l += 2;
-        canvas.drawCircle(x1, y1, l, paintTarget);
-        canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
-        canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
+
+        // draw destination
+        if (targetStar != playerShip.getCurrentStar()) {
+            l += 2;
+            canvas.drawCircle(x1, y1, l, paintTarget);
+            canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
+            canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
+        }
 
         // draw ship
-        long x = getScrX(galaxy.getPlayerShip().getCurrentStar().getCoords().getX());
-        long y = getScrY(galaxy.getPlayerShip().getCurrentStar().getCoords().getY()) - r;
-        // canvas.drawLine(x, y, x - l, y - l * 2, paintShip);
-        // canvas.drawLine(x, y, x + l, y - l * 2, paintShip);
-        canvas.drawBitmap(shipBitmap, x - l * 2, y - l * 2, paintShip);
+        if (isAnimating) {
+            if (Math.pow(shipX - targetX, 2) + Math.pow(shipY - targetY, 2) < 144) {
+                isAnimating = false;
+                invalidate();
+            } else {
+                canvas.drawBitmap(shipBitmap, shipX, shipY, paintShip);
+                canvas.drawLine(shipX, shipY, targetX, targetY, paintStar);
+            }
+        } else {
+            long x = getScrX(galaxy.getPlayerShip().getCurrentStar().getCoords().getX());
+            long y = getScrY(galaxy.getPlayerShip().getCurrentStar().getCoords().getY()) - r;
+            canvas.drawBitmap(shipBitmap, x - l * 2, y - l * 2, paintShip);
+            // draw path
+            canvas.drawLine(x, y, x1, y1, paintStar);
+        }
 
-        // draw path
-        canvas.drawLine(x, y, x1, y1, paintStar);
         // debug text
         canvas.drawText(debugStr, 10, 50, paintDebug);
         moved = false;
@@ -246,5 +258,33 @@ public class GalaxyView extends View  implements View.OnTouchListener {
 
     public static Star getTargetStar() {
         return targetStar;
+    }
+
+    public void setAnimating(boolean animating) {
+        isAnimating = animating;
+    }
+
+    public void setShipX(int shipX) {
+        this.shipX = shipX;
+    }
+
+    public void setShipY(int shipY) {
+        this.shipY = shipY;
+    }
+
+    public void setTargetX(int targetX) {
+        this.targetX = targetX;
+    }
+
+    public void setTargetY(int targetY) {
+        this.targetY = targetY;
+    }
+
+    public void setDeltaX(float deltaX) {
+        this.deltaX = deltaX;
+    }
+
+    public void setDeltaY(float deltaY) {
+        this.deltaY = deltaY;
     }
 }

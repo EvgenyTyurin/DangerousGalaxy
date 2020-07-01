@@ -22,8 +22,8 @@ public class SystemView extends View implements View.OnTouchListener {
     private final Paint paintShip = new Paint();
     private final Paint paintTarget = new Paint();
     private final Paint paintPlanet = new Paint();
-    private Planet targetPlanet;
     SpaceShip playerShip = Galaxy.getInstance().getPlayerShip();
+    private Planet targetPlanet = playerShip.getCurrentPlanet();
     // Vars for ship movement animation
     private boolean animataing = false;
     private int direction = 0;
@@ -38,7 +38,6 @@ public class SystemView extends View implements View.OnTouchListener {
         paintTarget.setColor(Color.RED);
         paintTarget.setStyle(Paint.Style.STROKE);
         paintTarget.setStrokeWidth(4);
-        targetPlanet = null;
         setOnTouchListener(this);
         postInvalidate();
     }
@@ -59,7 +58,9 @@ public class SystemView extends View implements View.OnTouchListener {
             canvas.drawCircle(220, y, 50, paintPlanet);
             canvas.drawText(planet.getName() + ": " + planet.getPlanetEconomy(), 350, y, paintText);
             if (PrefsWork.readSlot(planet.getName() + ".visited").equals("1")) {
-                canvas.drawText("VISITED", 350, y + 30, paintText);
+                canvas.drawText( "TYPE: " + planet.getPlanetType() + " VISITED", 350, y + 30, paintText);
+            } else {
+                canvas.drawText( "TYPE: " + planet.getPlanetType(), 350, y + 30, paintText);
             }
         }
         // Draw target mark
@@ -67,35 +68,37 @@ public class SystemView extends View implements View.OnTouchListener {
             int x = 100;
             int y = 120;
             int l = 10;
-            if (targetPlanet != null) {
-                int x1 = 100;
-                int y1 = systemStar.getPlanets().indexOf(targetPlanet) * 150 + 300;
-                // canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
-                // canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
-                l += 2;
-                canvas.drawCircle(x1, y1, l, paintTarget);
-                canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
-                canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
+            if (targetPlanet != playerShip.getCurrentPlanet()) {
+                if (targetPlanet != null) {
+                    int x1 = 100;
+                    int y1 = systemStar.getPlanets().indexOf(targetPlanet) * 150 + 300;
+                    // canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
+                    // canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
+                    l += 2;
+                    canvas.drawCircle(x1, y1, l, paintTarget);
+                    canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
+                    canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
 
-            } else {
-                int x1 = 100;
-                int y1 = 120;
-                // canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
-                // canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
-                l += 2;
-                canvas.drawCircle(x1, y1, l, paintTarget);
-                canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
-                canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
+                } else {
+                    int x1 = 100;
+                    int y1 = 120;
+                    // canvas.drawLine(x1, y1, x1 - l, y1 - l * 2, paintTarget);
+                    // canvas.drawLine(x1, y1, x1 + l, y1 - l * 2, paintTarget);
+                    l += 2;
+                    canvas.drawCircle(x1, y1, l, paintTarget);
+                    canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
+                    canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
+                }
             }
             // Draw ship
             if (animataing) {
-                if (targetY == shipY) {
+                if (Math.abs(targetY - shipY) < 12) {
                     animataing = false;
                     invalidate();
                 } else {
-                    shipY += direction;
+                    shipY += direction * 10;
                     canvas.drawBitmap(GalaxyActivity.shipBitmap, x - 45, shipY, paintShip);
-                    postInvalidateDelayed(1);
+                    postInvalidate();
                 }
             } else {
                 Planet currentPlanet = playerShip.getCurrentPlanet();
