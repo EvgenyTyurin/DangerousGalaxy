@@ -24,7 +24,11 @@ public class SystemView extends View implements View.OnTouchListener {
     private final Paint paintPlanet = new Paint();
     private Planet targetPlanet;
     SpaceShip playerShip = Galaxy.getInstance().getPlayerShip();
-
+    // Vars for ship movement animation
+    private boolean animataing = false;
+    private int direction = 0;
+    private int targetY;
+    private int shipY;
 
     public SystemView(Context context) {
         super(context);
@@ -36,6 +40,7 @@ public class SystemView extends View implements View.OnTouchListener {
         paintTarget.setStrokeWidth(4);
         targetPlanet = null;
         setOnTouchListener(this);
+        postInvalidate();
     }
 
     @Override
@@ -57,7 +62,7 @@ public class SystemView extends View implements View.OnTouchListener {
                 canvas.drawText("VISITED", 350, y + 30, paintText);
             }
         }
-        // Draw ship and target marks
+        // Draw target mark
         if (systemStar == playerShip.getCurrentStar()) {
             int x = 100;
             int y = 120;
@@ -82,15 +87,27 @@ public class SystemView extends View implements View.OnTouchListener {
                 canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
                 canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
             }
-            Planet currentPlanet = playerShip.getCurrentPlanet();
-            if (currentPlanet != null) {
-                y = systemStar.getPlanets().indexOf(currentPlanet) * 150 + 300;
+            // Draw ship
+            if (animataing) {
+                if (targetY == shipY) {
+                    animataing = false;
+                    invalidate();
+                } else {
+                    shipY += direction;
+                    canvas.drawBitmap(GalaxyActivity.shipBitmap, x - 45, shipY, paintShip);
+                    postInvalidateDelayed(1);
+                }
+            } else {
+                Planet currentPlanet = playerShip.getCurrentPlanet();
+                if (currentPlanet != null) {
+                    y = systemStar.getPlanets().indexOf(currentPlanet) * 150 + 300;
+                }
+                /*
+                canvas.drawLine(x, y, x - l, y - l * 2, paintShip);
+                canvas.drawLine(x, y, x + l, y - l * 2, paintShip);
+                 */
+                canvas.drawBitmap(GalaxyActivity.shipBitmap, x - 45, y - 15, paintShip);
             }
-            /*
-            canvas.drawLine(x, y, x - l, y - l * 2, paintShip);
-            canvas.drawLine(x, y, x + l, y - l * 2, paintShip);
-             */
-            canvas.drawBitmap(GalaxyActivity.shipBitmap, x - 45, y - 15, paintShip);
         }
     }
 
@@ -112,5 +129,21 @@ public class SystemView extends View implements View.OnTouchListener {
 
     public void setTargetPlanet(Planet targetPlanet) {
         this.targetPlanet = targetPlanet;
+    }
+
+    public void setAnimataing(boolean animataing) {
+        this.animataing = animataing;
+    }
+
+    public void setDirection(int direction) {
+        this.direction = direction;
+    }
+
+    public void setTargetY(int targetY) {
+        this.targetY = targetY;
+    }
+
+    public void setShipY(int shipY) {
+        this.shipY = shipY;
     }
 }

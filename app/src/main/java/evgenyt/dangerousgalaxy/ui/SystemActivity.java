@@ -74,7 +74,14 @@ public class SystemActivity extends AppCompatActivity {
                         Intent intent = new Intent(this, BattleActivity.class);
                         startActivity(intent);
                     } else {
+                        int shipY = systemStar.getPlanets().indexOf(playerShip.getCurrentPlanet()) * 150 + 300;
                         playerShip.setCurrentPlanet(systemView.getTargetPlanet());
+                        int targetY = systemStar.getPlanets().indexOf(playerShip.getCurrentPlanet()) * 150 + 300;
+                        systemView.setAnimataing(true);
+                        systemView.setTargetY(targetY);
+                        systemView.setShipY(shipY);
+                        systemView.setDirection(targetY > shipY ? 1 : -1);
+                        systemView.postInvalidate();
                     }
                 } else {
                     Toast.makeText(this, "No fuel", Toast.LENGTH_SHORT).show();
