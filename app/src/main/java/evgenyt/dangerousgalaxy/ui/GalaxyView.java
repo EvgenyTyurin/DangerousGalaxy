@@ -58,7 +58,7 @@ public class GalaxyView extends View  implements View.OnTouchListener {
 
     // Animation vars
     private boolean isAnimating = false;
-    private int shipX, shipY, targetX, targetY;
+    private float shipX, shipY, targetX, targetY;
     private float deltaX, deltaY;
 
     private void init() {
@@ -128,8 +128,11 @@ public class GalaxyView extends View  implements View.OnTouchListener {
                 isAnimating = false;
                 invalidate();
             } else {
+                shipX += deltaX * 10;
+                shipY += deltaY * 10;
                 canvas.drawBitmap(shipBitmap, shipX, shipY, paintShip);
-                canvas.drawLine(shipX, shipY, targetX, targetY, paintStar);
+                // canvas.drawLine(shipX, shipY, targetX, targetY, paintStar);
+                postInvalidate();
             }
         } else {
             long x = getScrX(galaxy.getPlayerShip().getCurrentStar().getCoords().getX());
@@ -264,19 +267,19 @@ public class GalaxyView extends View  implements View.OnTouchListener {
         isAnimating = animating;
     }
 
-    public void setShipX(int shipX) {
+    public void setShipX(float shipX) {
         this.shipX = shipX;
     }
 
-    public void setShipY(int shipY) {
+    public void setShipY(float shipY) {
         this.shipY = shipY;
     }
 
-    public void setTargetX(int targetX) {
+    public void setTargetX(float targetX) {
         this.targetX = targetX;
     }
 
-    public void setTargetY(int targetY) {
+    public void setTargetY(float targetY) {
         this.targetY = targetY;
     }
 

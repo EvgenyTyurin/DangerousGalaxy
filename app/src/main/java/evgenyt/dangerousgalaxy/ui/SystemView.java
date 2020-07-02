@@ -78,7 +78,6 @@ public class SystemView extends View implements View.OnTouchListener {
                     canvas.drawCircle(x1, y1, l, paintTarget);
                     canvas.drawLine(x1 - l, y1, x1 + l, y1, paintTarget);
                     canvas.drawLine(x1, y1 - l, x1, y1 + l, paintTarget);
-
                 } else {
                     int x1 = 100;
                     int y1 = 120;

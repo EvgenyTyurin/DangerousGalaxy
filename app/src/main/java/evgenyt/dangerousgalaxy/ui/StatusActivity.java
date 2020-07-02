@@ -25,7 +25,8 @@ public class StatusActivity extends AppCompatActivity {
         final PlayerInfo player = galaxy.getPlayer();
         final SpaceShip playerShip = galaxy.getPlayerShip();
         TextView balanceText = findViewById(R.id.textBalance);
-        balanceText.setText("Balance:" + player.getBalance() + "cr.");
+        balanceText.setText("Balance: " + player.getBalance() + " cr." +
+                " Insurance: " + playerShip.getType().price / 10 + " cr.");
         TextView shipText = findViewById(R.id.text_ship);
         shipText.setText("Ship: " + playerShip.getType() +
                 ", integrity: " + playerShip.getHealth() + "%" +

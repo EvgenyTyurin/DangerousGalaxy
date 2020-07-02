@@ -55,10 +55,24 @@ public class GalaxyActivity extends AppCompatActivity {
                 Star targetStar = galaxyView.getTargetStar();
                 int distance = (int) SpaceMath.distanceLY(currentStar, targetStar);
                 if (playerShip.debFuel(distance)) {
+                    float shipX = galaxyView.getScrX(playerShip.getCurrentStar().getCoords().getX());
+                    float shipY = galaxyView.getScrY(playerShip.getCurrentStar().getCoords().getY());
+                    galaxyView.setShipX(shipX);
+                    galaxyView.setShipY(shipY);
                     playerShip.setCurrentStar(targetStar);
                     playerShip.setCurrentPlanet(null);
-                    galaxyView.invalidate();
                     updateTitle();
+                    galaxyView.setAnimating(true);
+                    float targetX = galaxyView.getScrX(playerShip.getCurrentStar().getCoords().getX());
+                    float targetY = galaxyView.getScrY(playerShip.getCurrentStar().getCoords().getY());
+                    galaxyView.setTargetX(targetX);
+                    galaxyView.setTargetY(targetY);
+                    float distanceScreen = SpaceMath.distance(shipX, targetX, shipY, targetY);
+                    float deltaX = (targetX - shipX) / distanceScreen;
+                    float deltaY = (targetY - shipY) / distanceScreen;
+                    galaxyView.setDeltaX(deltaX);
+                    galaxyView.setDeltaY(deltaY);
+                    galaxyView.postInvalidate();
                 }
                 return true;
             case R.id.menu_galaxy_system:
