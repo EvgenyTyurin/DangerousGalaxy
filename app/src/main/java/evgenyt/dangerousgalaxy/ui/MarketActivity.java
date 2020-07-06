@@ -54,7 +54,7 @@ public class MarketActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String[] strs = String.valueOf(listAdapter.getItem(position)).split("~");
                 final Commodity commodity = new Commodity(Commodity.CommodityType.valueOf(strs[0]));
-                AlertDialog.Builder builder = new AlertDialog.Builder(MarketActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(MarketActivity.this, R.style.AlertDialog);
                 TextView textCargo = new TextView(MarketActivity.this);
                 builder.setTitle("All cargo: " + playerShip.getCurrentCargoTonnage() + "t/" +
                         playerShip.getMaxCargoTonnage() + "t. Balance: " + player.getBalance() + "cr.");
