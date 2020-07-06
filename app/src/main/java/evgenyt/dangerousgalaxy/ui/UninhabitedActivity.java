@@ -37,6 +37,7 @@ public class UninhabitedActivity extends AppCompatActivity {
                     if (economy.getCommoditiesStock().get(commodity) != null) {
                         playerShip.moveToCargo(commodity, 1);
                         statusText.setText("PLANET DISCOVERED: Artifact found!");
+                        PrefsWork.changeIntSlot("artifacts" , 1);
                     } else {
                         statusText.setText("PLANET DISCOVERED: Nothing found...");
                     }

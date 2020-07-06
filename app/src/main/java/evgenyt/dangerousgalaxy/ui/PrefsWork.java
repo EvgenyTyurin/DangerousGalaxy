@@ -39,4 +39,17 @@ public class PrefsWork {
         return sharedPref.getString(slot, "");
     }
 
+    public static void changeIntSlot(String slot, int delta) {
+        int val = readIntSlot(slot);
+        val += delta;
+        saveSlot(slot, String.valueOf(val));
+    }
+
+    public static int readIntSlot(String slot) {
+        String valStr = readSlot(slot);
+        int val = valStr.equals("") ? 0 : Integer.valueOf(valStr);
+        return val;
+    }
+
+
 }

@@ -99,6 +99,7 @@ public class BattleActivity extends AppCompatActivity {
                     playerInfo.credBalance(price);
                     txtResult.setText("Encounter result: Your ship is " + battleResult.toString() +
                             "Awarded " + price +"cr.");
+                    PrefsWork.changeIntSlot("kills", 1);
                 }
                 else {
                     shipDestroyed();

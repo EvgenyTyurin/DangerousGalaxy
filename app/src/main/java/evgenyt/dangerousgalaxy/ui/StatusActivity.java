@@ -27,6 +27,53 @@ public class StatusActivity extends AppCompatActivity {
         TextView balanceText = findViewById(R.id.textBalance);
         balanceText.setText("Balance: " + player.getBalance() + " cr." +
                 " Insurance: " + playerShip.getType().price / 10 + " cr.");
+
+        TextView battleRatingText = findViewById(R.id.text_battle_rating);
+        int kills = PrefsWork.readIntSlot("kills");
+        String battleRating = "Harmless";
+        if (kills >= 5)
+            battleRating = "Mostly harmless";
+        if (kills >= 10)
+            battleRating = "Novice";
+        if (kills >= 20)
+            battleRating = "Competent";
+        if (kills >= 50)
+            battleRating = "Expert";
+        if (kills >= 100)
+            battleRating = "Master";
+        if (kills >= 150)
+            battleRating = "Dangerous";
+        if (kills >= 200)
+            battleRating = "Deadly";
+        if (kills >= 300)
+            battleRating = "Elite";
+        if (kills >= 500)
+            battleRating = "Super Elite";
+        battleRatingText.setText("Battle rating: " + battleRating + "(" + kills + " kills)");
+
+        int artifacts = PrefsWork.readIntSlot("artifacts");
+        String explorerRating = "Aimless";
+        if (artifacts >= 5)
+            explorerRating = "Mostly Aimless";
+        if (artifacts >= 10)
+            explorerRating = "Scout";
+        if (artifacts >= 20)
+            explorerRating = "Surveyor";
+        if (artifacts >= 50)
+            explorerRating = "Trailblazer";
+        if (artifacts >= 100)
+            explorerRating = "Pathfinder";
+        if (artifacts >= 150)
+            explorerRating = "Ranger";
+        if (artifacts >= 200)
+            explorerRating = "Pioneer";
+        if (artifacts >= 300)
+            explorerRating = "Elite";
+        if (artifacts >= 500)
+            explorerRating = "Super Elite";
+        TextView explorerRatingText = findViewById(R.id.text_explorer_rating);
+        explorerRatingText.setText("Explorer rating: " + explorerRating + "(" + artifacts + " artifacts)");
+
         TextView shipText = findViewById(R.id.text_ship);
         shipText.setText("Ship: " + playerShip.getType() +
                 ", integrity: " + playerShip.getHealth() + "%" +
