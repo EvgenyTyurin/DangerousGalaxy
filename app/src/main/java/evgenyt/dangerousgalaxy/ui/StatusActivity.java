@@ -32,7 +32,7 @@ public class StatusActivity extends AppCompatActivity {
         int kills = PrefsWork.readIntSlot("kills");
         String battleRating = "Harmless";
         if (kills >= 5)
-            battleRating = "Mostly harmless";
+            battleRating = "Mostly Harmless";
         if (kills >= 10)
             battleRating = "Novice";
         if (kills >= 20)
@@ -93,7 +93,8 @@ public class StatusActivity extends AppCompatActivity {
         cargoText.setText("Cargo: " + stringBuilder.toString());
         TextView navText = findViewById(R.id.text_nav);
         Star currentStar = playerShip.getCurrentStar();
-        navText.setText("Coordinates: " + currentStar.getName() + "(" + currentStar.getCoords().toString() + ")" );
+        int solDistance = (int) SpaceMath.distanceLY(currentStar, galaxy.SOL);
+        navText.setText("Coordinates: " + currentStar.getName() + "(" + solDistance + " l.y. from SOL)" );
         final Button destructButton = findViewById(R.id.button_destruct);
         destructButton.setOnClickListener(new View.OnClickListener() {
             @Override

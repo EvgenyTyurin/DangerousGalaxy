@@ -37,7 +37,7 @@ public class BuyShipActivity extends AppCompatActivity {
         final SpaceShip playerShip = galaxy.getPlayerShip();
         SpaceShip.Type playerShipType = playerShip.getType();
         TextView txtPlayerShip = findViewById(R.id.text_ship_player);
-        txtPlayerShip.setText("Ship to buy: " + playerShipType +
+        txtPlayerShip.setText("Your ship: " + playerShipType +
                 " attack:" + playerShipType.attack +
                 ", speed:" + playerShipType.speed +
                 ", cargo:" + playerShipType.maxCargo +
