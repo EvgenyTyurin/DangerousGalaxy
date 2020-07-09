@@ -95,7 +95,7 @@ public class BattleActivity extends AppCompatActivity {
                 if (getStruggleResult(playerShip.getType().attack * 2, enemyShip.getType().attack)) {
                     playerShip.setCurrentPlanet(SystemActivity.systemView.getTargetPlanet());
                     battleResult = BattleResult.WINNER;
-                    int price = enemyShip.getType().price / 10;
+                    int price = enemyShip.getType().price / 50;
                     playerInfo.credBalance(price);
                     txtResult.setText("Encounter result: Your ship is " + battleResult.toString() +
                             "Awarded " + price +"cr.");
